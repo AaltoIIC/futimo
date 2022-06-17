@@ -1,25 +1,55 @@
 ## Files
 
 ### generate_test_data.py
+This script can be used to generate test data. The script includes following parameters
 
-### test_data_gaussians.txt
-This file stores the parameters for gaussian distributions used to generate test data.
-Each row of the file contains mu (excpected value) and sigma (standard deviation) separated by colon (for ex. 0, 1). These parameters are then given to random.gauss() function in the script `generate_test_data.py`. 
-Each row corresponds to one variable and `generate_test_data.py` uses the first row as the first variable it creates, second row to the second variable, and so on. If not enough rows are defined, standard normal distribution mu=0, sigma=1 is used for the rest of the variables. Example of the `test_data_gaussians.txt` file below.
+    NUMBER_OF_VARIABLES = 5 #Defines the number of variables in the generated test data
+    STARTDATE = "2022-03-20T11:35:40.000Z" #The starting timestamp for test data
+    TIME_INTERVAL = 200 #Time between data rows in millisecods
+    NUMBER_OF_ROWS = 1000 #How many rows are generated
 
-    0, 1
-    3, 10
-    1, 1
-    2, 2
+    FILE_NAME_VARIABLE_DESCRIPTIONS = "examples/test_data_descriptions.txt" #File where variable descriptions are defined
+    FILE_NAME = "test_data_set.csv" #File name for the generated .csv file
+
+A .txt file can be used to define the distributions of generated data. The structure of this file is desribed in [test_data_descriptions.txt](#test_data_descriptions.txt) below. If there are not enough variables gaussian distribution with mu = 0 and sigma = 1 is used to generate variable values.
+
+The structure of the generated .csv file is as follows
+    Timestamp 1;Variable 1 value;Variable 2 value;Variable n value
+    Timestamp 2;Variable 1 value;Variable 2 value;Variable n value
+    Timestamp n;Variable 1 value;Variable 2 value;Variable n value
+
+### test_data_descriptions.txt
+This file stores the parameters for gaussian distributions used to generate test data. In addition, it is possible to define binary variables.
+Each row of the file contains variable name (optional) separated with semicolon (;) from distribution parameters mu (excpected value) and sigma (standard deviation) separated by a colon (for ex. 0, 1). These parameters are then given to random.gauss() function in the script `generate_test_data.py`. To define binary function, give a propability of True value. For example, 0.581. (58.1%)
+Each row corresponds to one variable and `generate_test_data.py` uses the first row as the first variable it creates, second row to the second variable, and so on. If not enough rows are defined, standard normal distribution mu=0, sigma=1 is used for the rest of the variables. The name of the variable can be left out as demonstarted in the last row of below. In this case only mu and sigma are given. (Note: In the fuzzification process, names for the variables are read from [test_data_descriptions.txt](#test_data_descriptions.txt) file.) Example of the `test_data_descriptions.txt` file:
+
+    Temperature; 30, 15
+    Voltage; 1, 3
+    Motor speed rpm; 500, 100
+    AlertOn; 0.581
+    Variable 5; 2, 5
     0, 1
 
 
 ### fuzzy_modeling.py
+This script is used to fuzzify data and store it in SQLite database. The script has the following parameters: 
 
-### fuzzy_membership_functions.txt
-This file defines the membership functions of fuzzy sets for the modeled variables. Currently, it is only possible to use gaussian functions for defining membership fucntions.
-Each line contains the variable name and membership ship functions of its fuzzy sets separated by semicolons. Each function is described with mu (excpected value) and sigma (standard deviation). Optionally, a name for the fuzzy set can be given. Example of `fuzzy_membership_functions.txt` file below.
+    VISUALIZATION_FUZZY_SETS = True #Visualize membership functions read from FILE_NAME_FUZZY_SETS, True = on, False = off
+    VISUALIZATION_INPUT_DATA = True #Visualize input data from FILE_NAME_TEST_DATA, True = on, False = off
+    VISUALIZATION_FUZZIFIED_DATA = True #Visualize fuzzified values, True = on, False = off
+    VISUALIZATION_WIDTH = 5 # How many times the std. dev. is the width of the visualization
+    VISUALIZATION_NO_POINTS = 200 # How many points are used for visualization
 
-    Temperature; -10, 150, Cold; 20, 75, Warm; 35, 75, Hot
-    Variable 1; 0, 1; 1, 1; 2, 1;
-    Variable 2; -2, 2, low; 1, 2; 2, 2, rather high; 3, 2;
+    FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets.txt" #Definitions for fuzzy sets
+    FILE_NAME_TEST_DATA = "test_data_set.csv" #Input data
+    FILE_NAME_DATA_BASE = "db.sql" #Database location
+
+### fuzzy_sets.txt
+This file defines the membership functions of fuzzy sets for the modeled variables. Currently, it is only possible to use gaussian functions for defining membership functions.
+Each line contains the variable name and membership functions of its fuzzy sets separated by semicolons. Each function is described with mu (excpected value) and sigma (standard deviation). Optionally, names for fuzzy sets can be given. If name is not given, a fuzzy set is referenced with its ordinal number. To model binary variables (that have only true or false state), give only variable name such as "AlertOn" in the example below. The order of the fuzzy sets defines for which column in the test data they are used. First row is used for the second column (first column is timestamp), second row for third column and so on. Example of `fuzzy_sets.txt` file below.
+
+    Temperature; -10, 11.8, Cold; 20, 8.5, Warm; 35, 8.5, Hot
+    Voltage; 0, 1; 1, 1; 2, 1
+    Motor speed rpm; 200, 30, low; 400, 30; 600, 30, rather high; 800, 30
+    AlertOn;
+    Variable 5; -5, 1; -3, 1; -1, 1
