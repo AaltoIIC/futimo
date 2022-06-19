@@ -5,6 +5,7 @@
 # Data
 *.csv
 *.db
+*.db-journal
 
 
 # Vagrant

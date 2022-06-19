@@ -1,15 +1,7 @@
 ## Files
 
 ### generate_test_data.py
-This script can be used to generate test data. The script includes following parameters
-
-    NUMBER_OF_VARIABLES = 5 #Defines the number of variables in the generated test data
-    STARTDATE = "2022-03-20T11:35:40.000Z" #The starting timestamp for test data
-    TIME_INTERVAL = 200 #Time between data rows in millisecods
-    NUMBER_OF_ROWS = 1000 #How many rows are generated
-
-    FILE_NAME_VARIABLE_DESCRIPTIONS = "examples/test_data_descriptions.txt" #File where variable descriptions are defined
-    FILE_NAME = "test_data_set.csv" #File name for the generated .csv file
+This script can be used to generate test data.
 
 A .txt file can be used to define the distributions of generated data. The structure of this file is desribed in [test_data_descriptions.txt](#test_data_descriptions.txt) below. If there are not enough variables gaussian distribution with mu = 0 and sigma = 1 is used to generate variable values.
 
@@ -32,17 +24,7 @@ Each row corresponds to one variable and `generate_test_data.py` uses the first 
 
 
 ### fuzzy_modeling.py
-This script is used to fuzzify data and store it in SQLite database. The script has the following parameters: 
-
-    VISUALIZATION_FUZZY_SETS = True #Visualize membership functions read from FILE_NAME_FUZZY_SETS, True = on, False = off
-    VISUALIZATION_INPUT_DATA = True #Visualize input data from FILE_NAME_TEST_DATA, True = on, False = off
-    VISUALIZATION_FUZZIFIED_DATA = True #Visualize fuzzified values, True = on, False = off
-    VISUALIZATION_WIDTH = 5 # How many times the std. dev. is the width of the visualization
-    VISUALIZATION_NO_POINTS = 200 # How many points are used for visualization
-
-    FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets.txt" #Definitions for fuzzy sets
-    FILE_NAME_TEST_DATA = "test_data_set.csv" #Input data
-    FILE_NAME_DATA_BASE = "db.sql" #Database location
+This script is used to fuzzify data and store it in SQLite database. 
 
 ### fuzzy_sets.txt
 This file defines the membership functions of fuzzy sets for the modeled variables. Currently, it is only possible to use gaussian functions for defining membership functions.
