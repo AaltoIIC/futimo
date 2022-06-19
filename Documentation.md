@@ -39,6 +39,7 @@ Each line contains the variable name and membership functions of its fuzzy sets 
 # expand_fuzzy_sets_for_visualization.py
 This script is used to export data from database to a csv file that can be used by other programs (such as MATLAB) to visualize data. The idea is that it includes the parameters of the fuzzy sets' membership functions into the cdv file.
 The output format of the file produced by the script is as follows:
+
     (Optionally timestamp 1), MeanOfMembershipFunction of first variable, SigmaOfMembershipFunction of first variable, MeanOfMembershipFunction of second variable, SigmaOfMembershipFunction of second variable, ..., Weight
     (Optionally timestamp 2), MeanOfMembershipFunction of first variable, SigmaOfMembershipFunction of first variable, MeanOfMembershipFunction of second variable, SigmaOfMembershipFunction of second variable, ..., Weight
 
