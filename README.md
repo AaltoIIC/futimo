@@ -1,7 +1,8 @@
 # Fuzzy Scripts
 Fuzzy Scripts for Testing Fuzzy Modeling Method
 
-Example visualizations with MATLAB:
+## Example visualizations with MATLAB:
+
 ![Visualization](examples/figures/Visualization_of_crane_data_1.png)
 ![Visualization](examples/figures/Visualization_of_crane_data_2.png)
 
