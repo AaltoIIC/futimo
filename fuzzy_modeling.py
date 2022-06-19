@@ -17,9 +17,9 @@ VISUALIZATION_NO_POINTS = 200 # How many points are used for visualization
 
 #File names
 #FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets.txt" #Definitions for fuzzy sets
-FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_crane_visualization.txt" #Definitions for fuzzy sets
+FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_crane.txt" #Definitions for fuzzy sets
 #FILE_NAME_TEST_DATA = "test_data_set.csv" #Input data
-FILE_NAME_TEST_DATA = "crane_data_trolley_and_bridge.csv"
+FILE_NAME_TEST_DATA = "crane_data_cycle1.csv"
 FILE_NAME_DATA_BASE = "fuzzy_data.db" #Database location
 
 #Aggregation
