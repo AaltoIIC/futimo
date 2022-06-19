@@ -9,7 +9,7 @@ import heapq
 from enum import Enum
 
 #Visualization parameters
-VISUALIZATION_FUZZY_SETS = False #Visualize membership functions read from FILE_NAME_FUZZY_SETS, True = on, False = off
+VISUALIZATION_FUZZY_SETS = True #Visualize membership functions read from FILE_NAME_FUZZY_SETS, True = on, False = off
 VISUALIZATION_INPUT_DATA = True #Visualize input data from FILE_NAME_TEST_DATA, True = on, False = off
 VISUALIZATION_FUZZIFIED_DATA = True #Visualize fuzzified values, True = on, False = off #TODO
 VISUALIZATION_WIDTH = 5 # How many times the std. dev. is the width of the visualization
@@ -17,15 +17,14 @@ VISUALIZATION_NO_POINTS = 200 # How many points are used for visualization
 
 #File names
 #FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets.txt" #Definitions for fuzzy sets
-FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_crane.txt" #Definitions for fuzzy sets
+FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_crane_visualization.txt" #Definitions for fuzzy sets
 #FILE_NAME_TEST_DATA = "test_data_set.csv" #Input data
-FILE_NAME_TEST_DATA = "crane_data_cycle1.csv"
+FILE_NAME_TEST_DATA = "crane_data_trolley_and_bridge.csv"
 FILE_NAME_DATA_BASE = "fuzzy_data.db" #Database location
 
 #Aggregation
 AGGREGATE_DATA = True #Fetch aggregated data from database
 LIST_OF_AGGREGATED_VARIABLES = ["BridgePosition", "TrolleyPosition"] #["Temperature", "Voltage", "Motor speed rpm", "AlertOn", "Variable 5"] #Select aggregated variables
-WRITE_AGGRGATED_DATA_TO_CSV = True #TODO
 
 #Define available conjunction methods
 class Conjuction_method(Enum):
@@ -51,9 +50,9 @@ NUMBER_OF_VARIABLES = 0
 
 
 #Read fuzzy set definitions from FILE_NAME_FUZZY_SETS
-def read_fuzzy_sets():
+def read_fuzzy_sets(file_name):
     list_of_fuzzy_sets = [] # Structure [(Variable name, [(mu, sigma, [optional name for fuzzy set])]), (Variable name 2, [])]
-    with open(FILE_NAME_FUZZY_SETS, "r") as f:
+    with open(file_name, "r") as f:
         for line in f:
             variable_name, *mf_functions = line.split(";")
             list_of_mf_functions = [] #list of tuples containing (mu, sigma, [optional name for fuzzy set]). Each tuple presents a single fuzzy set. If this list is empty, the variable is binary variable.
@@ -79,6 +78,7 @@ def read_data_and_fuzzify(fuzzy_sets):
         reader = csv.reader(f, delimiter=CSV_DELIMITER)
         fuzzified_data = [] #Data structure: [[timestamp, [membership grades of fuzzysets variable 1], [variable 2], [variable n]], [timestamp 2, [variable 1], [variable2], [variable 2]]]
         variable_names = next(reader)[1:]
+        print(variable_names)
         if NUMBER_OF_VARIABLES == 0:
             variables_read = len(variable_names) + 1
         else:
@@ -88,6 +88,7 @@ def read_data_and_fuzzify(fuzzy_sets):
             timestamp = row[0]
             data_row.append(timestamp)
             for i in range(variables_read - 1):
+                #print(fuzzy_sets)
                 fuzzy_sets_mfs = fuzzy_sets[i][1] #Fuzzy sets' membership functions related to a single variable
                 if len(fuzzy_sets_mfs) == 0: #Check if boolean variable
                     grades = [row[i + 1]] #Value tells if it is true or false. 1 = true, 0 = false
@@ -246,17 +247,17 @@ def visualize_data_in_database():
     pass
 
 #This function sums weights and returns rows with same ordinal numbers
-def aggregate_data_in_db(list_of_variables):
+def aggregate_data_with_query(list_of_variables, database_file, table_name):
     try:
         #Connect to database
-        conn = sqlite3.connect(FILE_NAME_DATA_BASE)
+        conn = sqlite3.connect(database_file)
         cursor = conn.cursor()
         print("Connected to database")
 
         #NOTE: This method of directly modifying query string is insecure and should ne modified for production version
         #Sum and fetch data
         query = 'SELECT ' +  ','.join(['"' + variable + '"' for variable in list_of_variables]) + """, SUM(Weight) AS sum_weight
-        FROM """ + TABLE_NAME + """
+        FROM """ + table_name + """
         GROUP BY """ + ','.join(['"' + variable + '"' for variable in list_of_variables]) + """
         ORDER BY sum_weight DESC"""
 
@@ -269,6 +270,7 @@ def aggregate_data_in_db(list_of_variables):
             print(row)
         """
         conn.commit()
+        return data
 
     except sqlite3.Error as error:
         print("Error with database", error)
@@ -280,12 +282,12 @@ def aggregate_data_in_db(list_of_variables):
         print("Connection to database closed")
 
 def main():
-    fuzzy_sets = read_fuzzy_sets()
+    fuzzy_sets = read_fuzzy_sets(FILE_NAME_FUZZY_SETS)
     read_data_and_fuzzify(fuzzy_sets)
     if VISUALIZATION_INPUT_DATA:
         visualize_input_data()
     if AGGREGATE_DATA:
-        aggregate_data_in_db(LIST_OF_AGGREGATED_VARIABLES)
+        aggregate_data_with_query(LIST_OF_AGGREGATED_VARIABLES, FILE_NAME_DATA_BASE, TABLE_NAME)
 
 if __name__ == "__main__":
     main()
