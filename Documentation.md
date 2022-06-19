@@ -35,3 +35,11 @@ Each line contains the variable name and membership functions of its fuzzy sets 
     Motor speed rpm; 200, 30, low; 400, 30; 600, 30, rather high; 800, 30
     AlertOn;
     Variable 5; -5, 1; -3, 1; -1, 1
+
+# expand_fuzzy_sets_for_visualization.py
+This script is used to export data from database to a csv file that can be used by other programs (such as MATLAB) to visualize data. The idea is that it includes the parameters of the fuzzy sets' membership functions into the cdv file.
+The output format of the file produced by the script is as follows:
+    (Optionally timestamp 1), MeanOfMembershipFunction of first variable, SigmaOfMembershipFunction of first variable, MeanOfMembershipFunction of second variable, SigmaOfMembershipFunction of second variable, ..., Weight
+    (Optionally timestamp 2), MeanOfMembershipFunction of first variable, SigmaOfMembershipFunction of first variable, MeanOfMembershipFunction of second variable, SigmaOfMembershipFunction of second variable, ..., Weight
+
+The script uses [fuzzy_sets.txt](#fuzzy_sets.txt) file for definition.
