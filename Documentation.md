@@ -58,18 +58,16 @@ This script is used to generate selected number of fuzzy sets and their membersh
 
 * Check that you have set the delimiter of the csv file correctly
 
-    CSV_DELIMITER = ","
+        CSV_DELIMITER = ","
 
 * Check that all file nimes are correct and they contain data you expect them to have
-
-    '''
-    FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets.txt" #Definitions for fuzzy sets
-    FILE_NAME_TEST_DATA = "test_data_set.csv" #Input data
-    FILE_NAME_DATA_BASE = "fuzzy_data.db" #Database location
-    '''
+    
+        FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets.txt" #Definitions for fuzzy sets
+        FILE_NAME_TEST_DATA = "test_data_set.csv" #Input data
+        FILE_NAME_DATA_BASE = "fuzzy_data.db" #Database location
 
 * If you run the script it will add the new data after previous data, so if you run the script two times with same parameters you have duplicate data in the database.
 
-    '''You can just remove the database file and run python3 fuzzy_modeling.py again'''
+        You can just remove the database file and run python3 fuzzy_modeling.py again
 
 
