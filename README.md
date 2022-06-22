@@ -18,20 +18,20 @@ After that you can run [fuzzy_modeling.py](fuzzy_modeling.py) to fuzzify data an
 
     '''python3 fuzzy_modeling.py''' 
 
+This script can visualize the fuzzy sets used for fuzzification.
+![Visualization](examples/figures/fuzzy_sets.png)
+
+In addition, raw data can be plotted.
+
+![Visualization](examples/figures/Visualization_of_crane_data_raw.png)
+
 If you want to visualize data, run first [expand_fuzzy_sets_for_visualization.py](expand_fuzzy_sets_for_visualization.py)
 
     '''expand_fuzzy_sets_for_visualization.py'''
 
-Thne you can run MATLAB script [DataVisualization.m](DataVisualization.m) that produces that visulization based on fuzzified data. This is illustarted below for crane data.
+Then you can run MATLAB script [DataVisualization.m](DataVisualization.m) that produces that visulization based on fuzzified data. This is illustarted below for crane data.
 ![Visualization](examples/figures/Visualization_of_crane_data_1.png)
 ![Visualization](examples/figures/Visualization_of_crane_data_2.png)
-
-This script can visualize the fuzzy sets used for fuzzification.
-![Visualization](examples/figures/fuzzy_sets.png)
-
-In addtion, raw data can be plotted.
-
-![Visualization](examples/figures/Visualization_of_crane_data_raw.png)
 
 See [Documentation](Documentation.md) for more accurate descriptions of the contents of this repository.
 
