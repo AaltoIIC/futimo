@@ -22,7 +22,7 @@ If you want to visualize data, run first [expand_fuzzy_sets_for_visualization.py
 
     '''expand_fuzzy_sets_for_visualization.py'''
 
-Thne you can run MATLAB script [DataVisualization.m](expand_fuzzy_sets_for_visualization.py)) that produces that visulization based on fuzzified data. This is illustarted below for crane data.
+Thne you can run MATLAB script [DataVisualization.m](DataVisualization.m) that produces that visulization based on fuzzified data. This is illustarted below for crane data.
 ![Visualization](examples/figures/Visualization_of_crane_data_1.png)
 ![Visualization](examples/figures/Visualization_of_crane_data_2.png)
 
