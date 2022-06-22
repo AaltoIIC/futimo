@@ -9,8 +9,8 @@ import heapq
 from enum import Enum
 
 #Visualization parameters
-VISUALIZATION_FUZZY_SETS = True #Visualize membership functions read from FILE_NAME_FUZZY_SETS, True = on, False = off
-VISUALIZATION_INPUT_DATA = True #Visualize input data from FILE_NAME_TEST_DATA, True = on, False = off
+VISUALIZATION_FUZZY_SETS = False #Visualize membership functions read from FILE_NAME_FUZZY_SETS, True = on, False = off
+VISUALIZATION_INPUT_DATA = False #Visualize input data from FILE_NAME_TEST_DATA, True = on, False = off
 VISUALIZATION_FUZZIFIED_DATA = True #Visualize fuzzified values, True = on, False = off #TODO
 VISUALIZATION_WIDTH = 5 # How many times the std. dev. is the width of the visualization
 VISUALIZATION_NO_POINTS = 200 # How many points are used for visualization
@@ -21,6 +21,10 @@ FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_crane.txt" #Definitions for fuzzy se
 #FILE_NAME_TEST_DATA = "test_data_set.csv" #Input data
 FILE_NAME_TEST_DATA = "crane_data_cycle1.csv"
 FILE_NAME_DATA_BASE = "fuzzy_data.db" #Database location
+
+#Select csv file delimiter for FILE_NAME_TEST_DATA
+CSV_DELIMITER = ","
+
 
 #Aggregation
 AGGREGATE_DATA = True #Fetch aggregated data from database
@@ -37,9 +41,6 @@ SELECTED_CONJUNCTION_METHOD = Conjuction_method.AVERAGE
 class Variable_type(Enum):
     BINARY = 1
     NUMERIC = 2
-
-#Select csv file delimiter
-CSV_DELIMITER = ","
 
 #Table name for fuzzified data
 TABLE_NAME = "fuzzy_sets_crane" #"crane_data"
@@ -78,7 +79,6 @@ def read_data_and_fuzzify(fuzzy_sets):
         reader = csv.reader(f, delimiter=CSV_DELIMITER)
         fuzzified_data = [] #Data structure: [[timestamp, [membership grades of fuzzysets variable 1], [variable 2], [variable n]], [timestamp 2, [variable 1], [variable2], [variable 2]]]
         variable_names = next(reader)[1:]
-        print(variable_names)
         if NUMBER_OF_VARIABLES == 0:
             variables_read = len(variable_names) + 1
         else:
@@ -88,7 +88,6 @@ def read_data_and_fuzzify(fuzzy_sets):
             timestamp = row[0]
             data_row.append(timestamp)
             for i in range(variables_read - 1):
-                #print(fuzzy_sets)
                 fuzzy_sets_mfs = fuzzy_sets[i][1] #Fuzzy sets' membership functions related to a single variable
                 if len(fuzzy_sets_mfs) == 0: #Check if boolean variable
                     grades = [row[i + 1]] #Value tells if it is true or false. 1 = true, 0 = false
@@ -153,7 +152,10 @@ def read_data_and_fuzzify(fuzzy_sets):
     except sqlite3.Error as error:
         print("Error with database", error)
         print("Creation query", creation_query)
-        print("Latest insert query", insert_query)
+        try:
+            print("Latest insert query", insert_query)
+        except UnboundLocalError:
+            print("Fail before insert query")
 
     finally:
         cursor.close()
@@ -291,3 +293,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+else:
+    #set visualization of if used as library
+    VISUALIZATION_FUZZY_SETS = False #Visualize membership functions read from FILE_NAME_FUZZY_SETS, True = on, False = off
+    VISUALIZATION_INPUT_DATA = False #Visualize input data from FILE_NAME_TEST_DATA, True = on, False = off

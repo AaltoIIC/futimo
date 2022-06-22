@@ -1,11 +1,6 @@
 # Fuzzy Scripts
 Fuzzy Scripts for Testing Fuzzy Modeling Method
 
-## Example visualizations with MATLAB:
-
-![Visualization](examples/figures/Visualization_of_crane_data_1.png)
-![Visualization](examples/figures/Visualization_of_crane_data_2.png)
-
 ## Description
 This project is created for testing the fuzzy data modeling method presented in Tuomas Keski-Heikkilä's master's [thesis](http://urn.fi/URN:NBN:fi:aalto-202109059012).
 A journal article of the method is currently under writing.
@@ -21,7 +16,15 @@ You can generate test data using [generate_test_data.py](generate_test_data.py).
 
 After that you can run [fuzzy_modeling.py](fuzzy_modeling.py) to fuzzify data and write it into database using the method desribed in [Placeholder for article].
 
-    '''python3 fuzzy_modeling.py'''
+    '''python3 fuzzy_modeling.py''' 
+
+If you want to visualize data, run first [expand_fuzzy_sets_for_visualization.py](expand_fuzzy_sets_for_visualization.py)
+
+    '''expand_fuzzy_sets_for_visualization.py'''
+
+Thne you can run MATLAB script [DataVisualization.m](expand_fuzzy_sets_for_visualization.py)) that produces that visulization based on fuzzified data. This is illustarted below for crane data.
+![Visualization](examples/figures/Visualization_of_crane_data_1.png)
+![Visualization](examples/figures/Visualization_of_crane_data_2.png)
 
 This script can visualize the fuzzy sets used for fuzzification.
 ![Visualization](examples/figures/fuzzy_sets.png)
