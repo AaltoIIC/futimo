@@ -12,11 +12,15 @@ def generate_membership_functions(number_of_fuzzy_sets, start, end, sigma):
 
 def main():
     #Examples for crane bridge
-    generate_membership_functions(50, 14, 26, 0.2)
+    generate_membership_functions(26, 0, 26, 0.5)
+    #Example load tare
+    generate_membership_functions(3, 0, 2, 0.4)
+    #Example hoist position
+    generate_membership_functions(10, 0, 3, 0.15)
     #Crane trolley
-    generate_membership_functions(40, 0, 10, 0.2)
+    generate_membership_functions(10, 0, 10, 0.5)
     #This function uses parameters defined at the beginning
-    generate_membership_functions(NUMBER_OF_FUZZY_SETS, START, END, SIGMA)
+    #generate_membership_functions(NUMBER_OF_FUZZY_SETS, START, END, SIGMA)
 
 if __name__ == "__main__":
     main()

@@ -8,14 +8,14 @@ import datetime
 import heapq
 from enum import Enum
 
-#Visualization parameters
+# Visualization parameters
 VISUALIZATION_FUZZY_SETS = False #Visualize membership functions read from FILE_NAME_FUZZY_SETS, True = on, False = off
 VISUALIZATION_INPUT_DATA = False #Visualize input data from FILE_NAME_TEST_DATA, True = on, False = off
 VISUALIZATION_FUZZIFIED_DATA = True #Visualize fuzzified values, True = on, False = off #TODO
 VISUALIZATION_WIDTH = 5 # How many times the std. dev. is the width of the visualization
 VISUALIZATION_NO_POINTS = 200 # How many points are used for visualization
 
-#File names
+# File names
 #FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets.txt" #Definitions for fuzzy sets
 FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_crane.txt" #Definitions for fuzzy sets
 #FILE_NAME_TEST_DATA = "test_data_set.csv" #Input data
@@ -26,26 +26,34 @@ FILE_NAME_DATA_BASE = "fuzzy_data.db" #Database location
 CSV_DELIMITER = ","
 
 
-#Aggregation
+# Aggregation
 AGGREGATE_DATA = True #Fetch aggregated data from database
-LIST_OF_AGGREGATED_VARIABLES = ["BridgePosition", "TrolleyPosition"] #["Temperature", "Voltage", "Motor speed rpm", "AlertOn", "Variable 5"] #Select aggregated variables
+LIST_OF_AGGREGATED_VARIABLES = ["Variable 1", "Variable 2"] #["Temperature", "Voltage", "Motor speed rpm", "AlertOn", "Variable 5"] #Select aggregated variables
 
-#Define available conjunction methods
+# Define available dateformats
+class Date_type(Enum):
+    Custom = 1 #YYYY-MM-DDTHH:mm:SS.msZ, for example 2022-03-20T11:35:40.000Z
+    OPC_UA = 2 #YYYY-MM-DD HH:mm:SS.us+HH:mm, for example 2022-09-03 15:27:13.250000+00:00
+
+DATE_TYPE = Date_type.OPC_UA
+
+# Define available conjunction methods
 class Conjuction_method(Enum):
     AVERAGE = 1
 
-#Conjunction method for calculating weight of the row
+# Conjunction method for calculating weight of the row
 SELECTED_CONJUNCTION_METHOD = Conjuction_method.AVERAGE
 
-#Define variable types
+# Define variable types
 class Variable_type(Enum):
     BINARY = 1
     NUMERIC = 2
 
-#Table name for fuzzified data
-TABLE_NAME = "fuzzy_sets_crane" #"crane_data"
+# Table name for fuzzified data
+TABLE_NAME = "crane_data"
+#TABLE_NAME = "fuzzy_sets" 
 
-#Defines how many columns are read from input csv file, if this is set to 0, all variables are read
+# Defines how many columns are read from input csv file, if this is set to 0, all variables are read
 NUMBER_OF_VARIABLES = 0
 
 
@@ -72,7 +80,16 @@ def read_fuzzy_sets(file_name):
             visualize_membership_functions_of_variable(variable)
     return list_of_fuzzy_sets
 
-#TODO: Kirjoita data tietokantaan
+#Helper function for creating timestamps in the next function
+def convert_int_OPC_UA(x):
+    #remove leading zeros and convert to int
+    value = x.lstrip("0")
+    if value == "":
+        return 0
+    else:
+        return int(value)
+
+#Read data from csv file, fuzzify data, and write into db
 def read_data_and_fuzzify(fuzzy_sets):
     #Read csv file row by row
     with open(FILE_NAME_TEST_DATA, "r") as f:
@@ -106,11 +123,38 @@ def read_data_and_fuzzify(fuzzy_sets):
         cursor = conn.cursor()
         print("Connected to database")
 
+        timestamp = fuzzified_data[0][0] #Fetch first timestamp
+        timestamps_work = True
+        try:
+            if DATE_TYPE == Date_type.Custom:
+                year, month, day, hours, minutes, seconds, milliseconds = map(int, timestamp.split("T")[0].split("-") + timestamp[:-1].split("T")[1].split(".")[0].split(":") + [timestamp[:-1].split(".")[1]]) #change timestamp into datetime object
+                datetime.datetime(year, month, day, hours, minutes, seconds, milliseconds * 1000)
+            elif DATE_TYPE == Date_type.OPC_UA:
+                year, month, day = map(convert_int_OPC_UA, timestamp.strip().split(" ")[0].split("-"))
+                hours, minutes, seconds = map(convert_int_OPC_UA, timestamp.strip().split(" ")[1][:8].split(":"))
+                separator = timestamp.strip().split(" ")[1][8] #either . or +
+                if separator == "+":
+                    microseconds = 0
+                else:
+                    microseconds = int(timestamp.strip().split(" ")[1][9:15])
+                datetime.datetime(year, month, day, hours, minutes, seconds, microseconds)
+
+        except Exception as e:
+            print("Date could not be converted to datetime object, writing timestamps as text")
+            timestamps_work = False
+        
+
         #NOTE: This method of directly modifying query string is insecure and should ne modified for production version
         #Create table if it does not exist already
-        creation_query = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + """ (
-            id INTEGER PRIMARY KEY,
-            Timestamp TEXT NOT NULL,""" + ",".join(["'" + variable_names[i] + "'" + " INTEGER" for i in range(variables_read - 1)]) + ", Weight FLOAT);"
+        if timestamps_work:
+            print("variable_names", variable_names)
+            creation_query = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + """ (
+                id INTEGER PRIMARY KEY,
+                Timestamp DATETIME NOT NULL,""" + ",".join(["'" + variable_names[i] + "'" + " INTEGER" for i in range(variables_read - 1)]) + ", Weight FLOAT);"
+        else:
+            creation_query = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + """ (
+                id INTEGER PRIMARY KEY,
+                Timestamp TEXT NOT NULL,""" + ",".join(["'" + variable_names[i] + "'" + " INTEGER" for i in range(variables_read - 1)]) + ", Weight FLOAT);"
         count = cursor.execute(creation_query)
         conn.commit()
         
@@ -136,16 +180,33 @@ def read_data_and_fuzzify(fuzzy_sets):
                 highest_weight = np.average(list(map(lambda grade_tuple: grade_tuple[0],  filter(lambda x: x[0] != Variable_type.BINARY, highest_grade_fuzzy_sets)))) #filter binary values out and select grades from tuple
                 second_highest_weight = np.average(list(map(lambda grade_tuple: grade_tuple[0],  filter(lambda x: x[0] != Variable_type.BINARY, second_highest_grade_fuzzy_sets)))) #filter binary values out and select grades from tuple
                 
-            #Finally write into database
-
-            #NOTE: This method of directly modifying query string is insecure and should ne modified for production version
-            #Add first highest grade fuzzy sets into query and after that aa second highest grades
+            
+            
+            # Finally write into database
+            # NOTE: This method of directly modifying query string is insecure and should ne modified for production version
+            # Add first highest grade fuzzy sets into query and after that aa second highest grades
+            if timestamps_work:
+                if DATE_TYPE == Date_type.Custom:
+                    year, month, day, hours, minutes, seconds, milliseconds = map(int, timestamp.split("T")[0].split("-") + timestamp[:-1].split("T")[1].split(".")[0].split(":") + [timestamp[:-1].split(".")[1]]) #change timestamp into datetime object
+                    date_string = str(year) + "-" + str(month) + "-" +  str(day) + "T" + str(hours) + ":" + str(minutes) + ":" + str(seconds) + "." + str(milliseconds) #SQLite accespts this format: YYYY-MM-DDTHH:MM:SS.SSS
+                elif DATE_TYPE == Date_type.OPC_UA:
+                    year, month, day = map(convert_int_OPC_UA, timestamp.strip().split(" ")[0].split("-"))
+                    hours, minutes, seconds = map(convert_int_OPC_UA, timestamp.strip().split(" ")[1][:8].split(":"))
+                    separator = timestamp.strip().split(" ")[1][8] #either . or +
+                    if separator == "+":
+                        date_string = str(year) + "-" + str(month) + "-" +  str(day) + "T" + str(hours) + ":" + str(minutes) + ":" + str(seconds) + "." + str(0)
+                    else:
+                        microseconds = int(timestamp.strip().split(" ")[1][9:15])
+                        date_string = str(year) + "-" + str(month) + "-" +  str(day) + "T" + str(hours) + ":" + str(minutes) + ":" + str(seconds) + "." + str(int(microseconds/1000)) #SQLite accespts this format: YYYY-MM-DDTHH:MM:SS.SSS
+            else:
+                date_string = timestamp
+            print(date_string)
             insert_query = "INSERT INTO " + TABLE_NAME + """
                                 (Timestamp,""" + ",".join(["'" + variable_names[i] + "'" for i in range(variables_read - 1)]) + """, Weight) 
-                                Values ('""" + timestamp + "'," + ",".join([str(grade_tuple[1]) for grade_tuple in highest_grade_fuzzy_sets]) + "," + str(highest_weight) + """),
-                                ('"""+ timestamp + "'," + ",".join([str(grade_tuple[1]) for grade_tuple in second_highest_grade_fuzzy_sets]) + "," + str(second_highest_weight) + ");"
+                                Values ('""" + date_string + "'," + ",".join([str(grade_tuple[1]) for grade_tuple in highest_grade_fuzzy_sets]) + "," + str(highest_weight) + """),
+                                ('"""+ date_string + "'," + ",".join([str(grade_tuple[1]) for grade_tuple in second_highest_grade_fuzzy_sets]) + "," + str(second_highest_weight) + ");"
+        
             
-
             count = cursor.execute(insert_query)
         conn.commit()
 

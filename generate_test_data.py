@@ -3,10 +3,10 @@ import datetime
 import random
 import numpy as np
 
-NUMBER_OF_VARIABLES = 5 #Defines the number of variables in the generated test data
+NUMBER_OF_VARIABLES = 100 #Defines the number of variables in the generated test data
 STARTDATE = "2022-03-20T11:35:40.000Z" #The starting timestamp for test data
 TIME_INTERVAL = 200 #Time between data rows in millisecods
-NUMBER_OF_ROWS = 20 #How many rows are generated
+NUMBER_OF_ROWS = 10000 #How many rows are generated
 
 FILE_NAME_VARIABLE_DESCRIPTIONS = "examples/test_data_descriptions.txt" #File where variable descriptions are defined if this fiel does not exists gaussian distribution with mu = 0 and sigma = 1 for each variable is used.
 FILE_NAME = "test_data_set.csv" #File name for the generated .csv file
@@ -21,11 +21,10 @@ def read_variable_descriptions():
             for line in f:
                 i += 1
                 data = line.split(";")
-                if len(variable_names) < NUMBER_OF_VARIABLES:
-                    if len(data) == 1:
-                        variable_names.append("Variable " + str(i))
-                    else:
-                        variable_names.append(data[0].strip())
+                if len(data) == 1:
+                    variable_names.append("Variable " + str(i))
+                else:
+                    variable_names.append(data[0].strip())
                 data = data[-1].split(",")
                 if len(data) == 2: #gaussian distribution
                     variable_descriptions.append(tuple([float(data[0].strip()), float(data[1].strip())]))
@@ -33,6 +32,7 @@ def read_variable_descriptions():
                     variable_descriptions.append(tuple([float(data[0].strip())]))
     except:
         print("Reading file failed. Using gaussian distribution (mu = 0 and sigma = 1) for generating variables.")
+        variable_names = variable_names = ["Variable " + str(i + 1) for i in range(NUMBER_OF_VARIABLES)]
     return variable_descriptions, variable_names
 
 def generate_data(variable_descriptions, variable_names):

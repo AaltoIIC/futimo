@@ -72,6 +72,6 @@ This script is used to generate selected number of fuzzy sets and their membersh
  
     and run again:
         
-        python3 fuzzy_modeling.py again
+        python3 fuzzy_modeling.py
 
 

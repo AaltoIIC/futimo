@@ -6,8 +6,8 @@ This project is created for testing the fuzzy data modeling method presented in 
 A journal article of the method is currently under writing.
 
 ## Installation
-For running this project Pthon 3 is required. Install the required packages by running 
-    '''pip install -r requirements.txt'''
+For running this project Python 3 is required. Install the required packages by running 
+    pip3 install -r requirements.txt
 
 ## Usage
 You can generate test data using [generate_test_data.py](generate_test_data.py). At the beginning of the script there are several parameters that can be used to modify the data. You can also use [test_data_descriptions.txt](examples/test_data_descriptions.txt) to modify the gaussian functions used to generate data.
@@ -39,7 +39,7 @@ See [Documentation](Documentation.md) for more accurate descriptions of the cont
 Riku Ala-Laurinaho
 
 The author would like to thank Tuomas Keski-Heikkilä, Miika Valtonen and Juuso Autiosalo for their support.
-The author would like to express their sincere gratitude to Innovaatiosäätiö.
+The author would like to express his sincere gratitude to Innovaatiosäätiö.
 
 ## License
 MIT
