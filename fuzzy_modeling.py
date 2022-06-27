@@ -16,14 +16,12 @@ VISUALIZATION_WIDTH = 5 # How many times the std. dev. is the width of the visua
 VISUALIZATION_NO_POINTS = 200 # How many points are used for visualization
 
 # File names
-#FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets.txt" #Definitions for fuzzy sets
-FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_crane.txt" #Definitions for fuzzy sets
-#FILE_NAME_TEST_DATA = "test_data_set.csv" #Input data
-FILE_NAME_TEST_DATA = "crane_data_cycle1.csv"
+FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets.txt" #Definitions for fuzzy sets
+FILE_NAME_TEST_DATA = "test_data_set.csv" #Input data
 FILE_NAME_DATA_BASE = "fuzzy_data.db" #Database location
 
 #Select csv file delimiter for FILE_NAME_TEST_DATA
-CSV_DELIMITER = ","
+CSV_DELIMITER = ";"
 
 
 # Aggregation
@@ -50,8 +48,7 @@ class Variable_type(Enum):
     NUMERIC = 2
 
 # Table name for fuzzified data
-TABLE_NAME = "crane_data"
-#TABLE_NAME = "fuzzy_sets" 
+TABLE_NAME = "fuzzy_sets" 
 
 # Defines how many columns are read from input csv file, if this is set to 0, all variables are read
 NUMBER_OF_VARIABLES = 0
