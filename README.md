@@ -7,6 +7,7 @@ A journal article of the method is currently under writing.
 
 ## Installation
 For running this project Python 3 is required. Install the required packages by running 
+
     pip3 install -r requirements.txt
 
 ## Usage
