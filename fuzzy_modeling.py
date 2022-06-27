@@ -35,7 +35,7 @@ class Date_type(Enum):
     Custom = 1 #YYYY-MM-DDTHH:mm:SS.msZ, for example 2022-03-20T11:35:40.000Z
     OPC_UA = 2 #YYYY-MM-DD HH:mm:SS.us+HH:mm, for example 2022-09-03 15:27:13.250000+00:00
 
-DATE_TYPE = Date_type.OPC_UA
+DATE_TYPE = Date_type.Custom
 
 # Define available conjunction methods
 class Conjuction_method(Enum):
