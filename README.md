@@ -28,7 +28,7 @@ In addition, raw data can be plotted.
 
 If you want to visualize data, run first [expand_fuzzy_sets_for_visualization.py](expand_fuzzy_sets_for_visualization.py)
 
-    expand_fuzzy_sets_for_visualization.py
+    python3 expand_fuzzy_sets_for_visualization.py
 
 Then you can run MATLAB script [DataVisualization.m](DataVisualization.m) that produces that visulization based on fuzzified data. This is illustarted below for crane data.
 ![Visualization](examples/figures/Visualization_of_crane_data_1.png)

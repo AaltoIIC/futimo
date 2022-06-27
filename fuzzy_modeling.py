@@ -9,15 +9,17 @@ import heapq
 from enum import Enum
 
 # Visualization parameters
-VISUALIZATION_FUZZY_SETS = False #Visualize membership functions read from FILE_NAME_FUZZY_SETS, True = on, False = off
-VISUALIZATION_INPUT_DATA = False #Visualize input data from FILE_NAME_TEST_DATA, True = on, False = off
+VISUALIZATION_FUZZY_SETS = True #Visualize membership functions read from FILE_NAME_FUZZY_SETS, True = on, False = off
+VISUALIZATION_INPUT_DATA = True #Visualize input data from FILE_NAME_TEST_DATA, True = on, False = off
 VISUALIZATION_FUZZIFIED_DATA = True #Visualize fuzzified values, True = on, False = off #TODO
 VISUALIZATION_WIDTH = 5 # How many times the std. dev. is the width of the visualization
 VISUALIZATION_NO_POINTS = 200 # How many points are used for visualization
 
 # File names
 FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets.txt" #Definitions for fuzzy sets
+#FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_crane.txt" #Definitions for fuzzy sets
 FILE_NAME_TEST_DATA = "test_data_set.csv" #Input data
+#FILE_NAME_TEST_DATA = "crane_data_cycle1.csv"
 FILE_NAME_DATA_BASE = "fuzzy_data.db" #Database location
 
 #Select csv file delimiter for FILE_NAME_TEST_DATA
@@ -48,6 +50,7 @@ class Variable_type(Enum):
     NUMERIC = 2
 
 # Table name for fuzzified data
+#TABLE_NAME = "crane_data"
 TABLE_NAME = "fuzzy_sets" 
 
 # Defines how many columns are read from input csv file, if this is set to 0, all variables are read
@@ -144,7 +147,6 @@ def read_data_and_fuzzify(fuzzy_sets):
         #NOTE: This method of directly modifying query string is insecure and should ne modified for production version
         #Create table if it does not exist already
         if timestamps_work:
-            print("variable_names", variable_names)
             creation_query = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + """ (
                 id INTEGER PRIMARY KEY,
                 Timestamp DATETIME NOT NULL,""" + ",".join(["'" + variable_names[i] + "'" + " INTEGER" for i in range(variables_read - 1)]) + ", Weight FLOAT);"
@@ -197,7 +199,6 @@ def read_data_and_fuzzify(fuzzy_sets):
                         date_string = str(year) + "-" + str(month) + "-" +  str(day) + "T" + str(hours) + ":" + str(minutes) + ":" + str(seconds) + "." + str(int(microseconds/1000)) #SQLite accespts this format: YYYY-MM-DDTHH:MM:SS.SSS
             else:
                 date_string = timestamp
-            print(date_string)
             insert_query = "INSERT INTO " + TABLE_NAME + """
                                 (Timestamp,""" + ",".join(["'" + variable_names[i] + "'" for i in range(variables_read - 1)]) + """, Weight) 
                                 Values ('""" + date_string + "'," + ",".join([str(grade_tuple[1]) for grade_tuple in highest_grade_fuzzy_sets]) + "," + str(highest_weight) + """),
