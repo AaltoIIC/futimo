@@ -21,7 +21,7 @@ def construct_output_file(data, fuzzy_sets, outputfile, delimiter, list_of_varia
     with open(outputfile, "w") as f:
         writer = csv.writer(f, delimiter=delimiter)
         #Write headers
-        headers = functools.reduce(lambda a, variable: a + [variable + "Mean", variable + "Sigma"], list_of_variables, []) + ['Weight']
+        headers = functools.reduce(lambda a, variable: a + [variable.replace(" ", "") + "Mean", variable.replace(" ", "") + "Sigma"], list_of_variables, []) + ['Weight']
         writer.writerow(headers)
         for row in data:
             data_row = []

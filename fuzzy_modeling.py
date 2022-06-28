@@ -10,7 +10,7 @@ from enum import Enum
 
 # Visualization parameters
 VISUALIZATION_FUZZY_SETS = True #Visualize membership functions read from FILE_NAME_FUZZY_SETS, True = on, False = off
-VISUALIZATION_INPUT_DATA = True #Visualize input data from FILE_NAME_TEST_DATA, True = on, False = off
+VISUALIZATION_INPUT_DATA = False #Visualize input data from FILE_NAME_TEST_DATA, True = on, False = off
 VISUALIZATION_FUZZIFIED_DATA = True #Visualize fuzzified values, True = on, False = off #TODO
 VISUALIZATION_WIDTH = 5 # How many times the std. dev. is the width of the visualization
 VISUALIZATION_NO_POINTS = 200 # How many points are used for visualization
