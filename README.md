@@ -34,7 +34,7 @@ Then you can run MATLAB script [DataVisualization.m](DataVisualization.m) that p
 ![Visualization](examples/figures/Visualization_of_crane_data_1.png)
 ![Visualization](examples/figures/Visualization_of_crane_data_2.png)
 
-See [Documentation](Documentation.md) for more accurate descriptions of the contents of this repository. In addition, if there are issues you can check [Problems?](Documentation.md#Problems?)
+See [Documentation](Documentation.md) for more accurate descriptions of the contents of this repository. In addition, if there are issues you can check [Problems?](Documentation.md#problems)
 
 ### Use of crane dataset
 
