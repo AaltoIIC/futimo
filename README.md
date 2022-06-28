@@ -34,7 +34,37 @@ Then you can run MATLAB script [DataVisualization.m](DataVisualization.m) that p
 ![Visualization](examples/figures/Visualization_of_crane_data_1.png)
 ![Visualization](examples/figures/Visualization_of_crane_data_2.png)
 
-See [Documentation](Documentation.md) for more accurate descriptions of the contents of this repository.
+See [Documentation](Documentation.md) for more accurate descriptions of the contents of this repository. In addition, if there are issues you can check [Problems?](Problems?#Documentation.md)
+
+### Use of crane dataset
+
+We have collected a industrial crane dataset that is available in [IEEE Dataport](https://dx.doi.org/10.21227/6b9d-tr16) (downloading requires registration).
+The more accurate description of tha data set is also available in IEEE Dataport.
+
+The root of dataset folder contains `combined_csv.csv` file that includes the most relevant variables from all cycles.
+In addition, it is possible to examine each test cycle separately from Raw data -> CycleX. Each test cycle folder contain `CycleX_export_dataframe.csv` that includes the most relevant variables, and is good starting point for examinine data.
+
+To model data in `combined_csv.csv` or `CycleX_export_dataframe.csv`, in `fuzzy_modeling.py` the following modifications has to be made:
+Change the fuzzy set description file to `fuzzy_sets_crane.txt`
+
+    FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_crane.txt"
+
+Then set input file name to the csv file you want to model:
+
+    #FILE_NAME_TEST_DATA = "Cycle1_export_dataframe.csv"
+
+Change csv delimiter to `,`:
+
+    CSV_DELIMITER = ";"
+
+Change date format to OPC UA (note: the timestamps in the data are incorrect, as the OPC UA server was showing year 2103):
+
+    DATE_TYPE = Date_type.OPC_UA
+
+Finally, you can change the table name in database:
+
+    TABLE_NAME = "crane_data"
+
 
 ## Authors and acknowledgment
 Riku Ala-Laurinaho
