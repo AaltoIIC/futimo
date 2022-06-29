@@ -20,6 +20,7 @@ After that you can run [fuzzy_modeling.py](fuzzy_modeling.py) to fuzzify data an
     python3 fuzzy_modeling.py
 
 This script can visualize the fuzzy sets used for fuzzification.
+
 ![Visualization](examples/figures/fuzzy_sets.png)
 
 In addition, raw data can be plotted.
@@ -65,6 +66,14 @@ Change date format to OPC UA (note: the timestamps in the data are incorrect, as
 Finally, you can change the table name in database:
 
     TABLE_NAME = "crane_data"
+
+Note: if you model only single cycle, remove the last row from `fuzzy_sets_crane.txt`
+
+    Cycle; 1.0, 0.1; 2.0, 0.1; 3.0, 0.1; 4.0, 0.1; 5.0, 0.1; 6.0, 0.1; 7.0, 0.1; 8.0, 0.1
+
+Then run:
+
+    python3 fuzzy_modeling.py
 
 
 ## Authors and acknowledgment
