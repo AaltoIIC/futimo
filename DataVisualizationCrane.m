@@ -1,4 +1,3 @@
-%T = readtable('Parametersv2.csv', 'PreserveVariableNames',true);
 T = readtable('data_for_visualization.csv', 'PreserveVariableNames',true);
 x = 14:.1:26; % BridgeAxis
 y = 0:.1:11; %TrolleyAxis
@@ -20,8 +19,4 @@ contour(Y,X,Z,'LevelList',10:10:200), axis equal
 xlabel('TrolleyPosition(m)') 
 ylabel('BridgePosition(m)')
 
-% 100 bridge jäsenyysfunktiota
-% 40 trolley jäsenyysfunktiota
-% Summaus tehty vasta query vaiheessa
-% Cycle 6 datapisteet
 

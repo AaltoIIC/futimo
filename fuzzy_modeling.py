@@ -10,20 +10,19 @@ from enum import Enum
 
 # Visualization parameters
 VISUALIZATION_FUZZY_SETS = True #Visualize membership functions read from FILE_NAME_FUZZY_SETS, True = on, False = off
-VISUALIZATION_INPUT_DATA = False #Visualize input data from FILE_NAME_TEST_DATA, True = on, False = off
-VISUALIZATION_FUZZIFIED_DATA = True #Visualize fuzzified values, True = on, False = off #TODO
+VISUALIZATION_INPUT_DATA = True #Visualize input data from FILE_NAME_TEST_DATA, True = on, False = off
 VISUALIZATION_WIDTH = 5 # How many times the std. dev. is the width of the visualization
 VISUALIZATION_NO_POINTS = 200 # How many points are used for visualization
 
 # File names
-#FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets.txt" #Definitions for fuzzy sets
-FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_crane.txt" #Definitions for fuzzy sets
-#FILE_NAME_TEST_DATA = "test_data_set.csv" #Input data
-FILE_NAME_TEST_DATA = "crane_data_cycle1.csv"
+FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets.txt" #Definitions for fuzzy sets
+#FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_crane.txt" #Definitions for fuzzy sets
+FILE_NAME_TEST_DATA = "test_data_set.csv" #Input data
+#FILE_NAME_TEST_DATA = "combined_csv.csv"
 FILE_NAME_DATA_BASE = "fuzzy_data.db" #Database location
 
 #Select csv file delimiter for FILE_NAME_TEST_DATA
-CSV_DELIMITER = ","
+CSV_DELIMITER = ";"
 
 
 # Aggregation
@@ -35,7 +34,7 @@ class Date_type(Enum):
     Custom = 1 #YYYY-MM-DDTHH:mm:SS.msZ, for example 2022-03-20T11:35:40.000Z
     OPC_UA = 2 #YYYY-MM-DD HH:mm:SS.us+HH:mm, for example 2022-09-03 15:27:13.250000+00:00
 
-DATE_TYPE = Date_type.OPC_UA
+DATE_TYPE = Date_type.Custom
 
 # Define available conjunction methods
 class Conjuction_method(Enum):
@@ -50,8 +49,8 @@ class Variable_type(Enum):
     NUMERIC = 2
 
 # Table name for fuzzified data
-TABLE_NAME = "crane_data"
-#TABLE_NAME = "fuzzy_sets" 
+#TABLE_NAME = "crane_data"
+TABLE_NAME = "fuzzy_sets" 
 
 # Defines how many columns are read from input csv file, if this is set to 0, all variables are read
 NUMBER_OF_VARIABLES = 0

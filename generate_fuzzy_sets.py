@@ -1,9 +1,9 @@
 import numpy as np
 
-NUMBER_OF_FUZZY_SETS = 50 #Number of fuzzy sets
+NUMBER_OF_FUZZY_SETS = 10 #Number of fuzzy sets
 START = -10 #First mean for gaussian function
 END = 80 #Last mean for gaussian function
-SIGMA = 0.7 #Sigma for the membership function
+SIGMA = 5 #Sigma for the membership function
 
 def generate_membership_functions(number_of_fuzzy_sets, start, end, sigma):
     means = np.linspace(start, end, number_of_fuzzy_sets)

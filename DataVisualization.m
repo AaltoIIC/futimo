@@ -18,28 +18,3 @@ figure(2)
 contour(Y,X,Z,'LevelList',10:10:200), axis equal
 ylabel('Temperature (°C)') 
 xlabel('Voltage (V)')
-
-%{
-
-T = readtable('data_for_visualization.csv', 'PreserveVariableNames',true);
-x = -5:.1:5; % Temperature Axis
-y = 0:1:1000; %Voltagey Axis
-[X, Y] = meshgrid(x,y); %// all combinations of x, y
-Z = 0;
-for i = 1:1:height(T)
-    mu = [T.VoltageMean(i), T.MotorspeedrpmMean(i)];
-    sigma = [(T.VoltageSigma(i)) 0; 0 (T.MotorspeedrpmSigma(i))];
-    Z = Z + mvnpdf([X(:) Y(:)],mu,sigma)*T.Weight(i); %// compute Gaussian pdf
-end
-Z = reshape(Z,size(X)); %// put into same size as X, Y
-figure(1)
-surf(X,Y,Z)
-set ( gca, 'ydir', 'reverse' )
-xlabel('Temperature (°C)') 
-ylabel('Voltage (V)')
-figure(2)
-contour(Y,X,Z,'LevelList',10:10:200), axis equal
-ylabel('Temperature (°C)') 
-xlabel('Voltage (V)')
-
-%}

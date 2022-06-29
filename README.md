@@ -77,7 +77,19 @@ Then run:
 
 From file `expand_fuzzy_sets_for_visualization.py` you can modify the variables that you want aggregate.
 
-    LIST_OF_AGGREGATED_VARIABLES = ["BridgePosition", "TrolleyPosition"]
+    LIST_OF_AGGREGATED_VARIABLES = ["BridgePosition", "LoadTare", "HoistPosition", "TrolleyPosition"]
+
+Remember also to change:
+
+* csv delimiter to `,`:
+
+    CSV_DELIMITER = ","
+* fuzzy set description file to `fuzzy_sets_crane.txt`
+
+* table name in database:
+
+    TABLE_NAME = "crane_data"
+
 
 You can also list all variables, in which case the script is used only to produce suitable dataformat for `DataVisualizationCrane.m`. Run:
 
