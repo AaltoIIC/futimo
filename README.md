@@ -85,7 +85,7 @@ You can also list all variables, in which case the script is used only to produc
 
 After this you can use `DataVisualizationCrane.m` to visualize data.
 Change variables `BridgePositionMean`, `BridgePositionSigma`, `TrolleyPositionMean`, and `TrolleyPositionSigma` to model other variables. For example, if you want to model HoistPosition, change `BridgePositionMean`, `BridgePositionSigma` to `HoistPositionMean`, `HoistPositionSigma`.
-Remember also change the axes accrodingly:
+Remember also change the axes settings:
 
     x = 14:.1:26; % BridgeAxis
     y = 0:.1:11; %TrolleyAxis
