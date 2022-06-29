@@ -53,7 +53,7 @@ Change the fuzzy set description file to `fuzzy_sets_crane.txt`
 
 Then set input file name to the csv file you want to model:
 
-    #FILE_NAME_TEST_DATA = "Cycle1_export_dataframe.csv"
+    #FILE_NAME_TEST_DATA = "combined_csv.csv"
 
 Change csv delimiter to `,`:
 
