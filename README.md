@@ -75,6 +75,21 @@ Then run:
 
     python3 fuzzy_modeling.py
 
+From file `expand_fuzzy_sets_for_visualization.py` you can modify the variables that you want aggregate.
+
+    LIST_OF_AGGREGATED_VARIABLES = ["BridgePosition", "TrolleyPosition"]
+
+You can also list all variables, in which case the script is used only to produce suitable dataformat for `DataVisualizationCrane.m`. Run:
+
+    python3 expand_fuzzy_sets_for_visualization.py
+
+After this you can use `DataVisualizationCrane.m` to visualize data.
+Change variables `BridgePositionMean`, `BridgePositionSigma`, `TrolleyPositionMean`, and `TrolleyPositionSigma` to model other variables. For example, if you want to model HoistPosition, change `BridgePositionMean`, `BridgePositionSigma` to `HoistPositionMean`, `HoistPositionSigma`.
+Remember also change the axes accrodingly:
+
+    x = 14:.1:26; % BridgeAxis
+    y = 0:.1:11; %TrolleyAxis
+
 
 ## Authors and acknowledgment
 Riku Ala-Laurinaho
