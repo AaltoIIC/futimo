@@ -265,20 +265,43 @@ def visualize_input_data():
         variable_names = first_line[1:variables_read + 1] #leave column out as it is timestamp
         variable_values = [[] for _ in range(variables_read)] #initialize list with an empty list for each variable
         second_line = next(reader)
-        try: 
-            year, month, day, hours, minutes, seconds, milliseconds = map(int, second_line[0].split("T")[0].split("-") + second_line[0][:-1].split("T")[1].split(".")[0].split(":") + [second_line[0][:-1].split(".")[1]]) #change timestamp into datetime object
-            timestamps.append(datetime.datetime(year, month, day, hours, minutes, seconds, milliseconds * 1000))
-            date_format_supported = True
-        except:
-            print("Timestamp format not supported")
+        date_format_supported = True
+        try:
+            timestamp = second_line[0]
+            if DATE_TYPE == Date_type.Custom:
+                year, month, day, hours, minutes, seconds, milliseconds = map(int, timestamp.split("T")[0].split("-") + timestamp[:-1].split("T")[1].split(".")[0].split(":") + [timestamp[:-1].split(".")[1]]) #change timestamp into datetime object
+                timestamps.append(datetime.datetime(year, month, day, hours, minutes, seconds, milliseconds * 1000))
+            elif DATE_TYPE == Date_type.OPC_UA:
+                year, month, day = map(convert_int_OPC_UA, timestamp.strip().split(" ")[0].split("-"))
+                hours, minutes, seconds = map(convert_int_OPC_UA, timestamp.strip().split(" ")[1][:8].split(":"))
+                separator = timestamp.strip().split(" ")[1][8] #either . or +
+                if separator == "+":
+                    microseconds = 0
+                else:
+                    microseconds = int(timestamp.strip().split(" ")[1][9:15])
+                timestamps.append(datetime.datetime(year, month, day, hours, minutes, seconds, microseconds))
+        except Exception as e:
+            print("Timestamp format not supported, using numbers in x-axis")
             timestamps.append(1)
             date_format_supported = False
         for i in range(1, variables_read + 1):
                 variable_values[i - 1].append(float(second_line[i]))
         if date_format_supported:
             for row in reader:
-                year, month, day, hours, minutes, seconds, milliseconds = map(int, row[0].split("T")[0].split("-") + row[0][:-1].split("T")[1].split(".")[0].split(":") + [row[0][:-1].split(".")[1]]) #change timestamp into datetime object
-                timestamps.append(datetime.datetime(year, month, day, hours, minutes, seconds, milliseconds * 1000))
+                timestamp = row[0]
+                if DATE_TYPE == Date_type.Custom:
+                    year, month, day, hours, minutes, seconds, milliseconds = map(int, timestamp.split("T")[0].split("-") + timestamp[:-1].split("T")[1].split(".")[0].split(":") + [timestamp[:-1].split(".")[1]]) #change timestamp into datetime object
+                    timestamps.append(datetime.datetime(year, month, day, hours, minutes, seconds, milliseconds * 1000))
+                elif DATE_TYPE == Date_type.OPC_UA:
+                    year, month, day = map(convert_int_OPC_UA, timestamp.strip().split(" ")[0].split("-"))
+                    hours, minutes, seconds = map(convert_int_OPC_UA, timestamp.strip().split(" ")[1][:8].split(":"))
+                    separator = timestamp.strip().split(" ")[1][8] #either . or +
+                    if separator == "+":
+                        microseconds = 0
+                    else:
+                        microseconds = int(timestamp.strip().split(" ")[1][9:15])
+                    timestamps.append(datetime.datetime(year, month, day, hours, minutes, seconds, microseconds))
+                
                 for i in range(1, variables_read + 1):
                     variable_values[i - 1].append(float(row[i]))
         else:
@@ -300,11 +323,7 @@ def visualize_input_data():
             plt.gcf().autofmt_xdate()
         plt.title(variable_names[i])
         plt.show()
-    
 
-#TODO: Visualize data in database
-def visualize_data_in_database():
-    pass
 
 #This function sums weights and returns rows with same ordinal numbers
 def aggregate_data_with_query(list_of_variables, database_file, table_name):

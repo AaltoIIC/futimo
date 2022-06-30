@@ -63,9 +63,13 @@ Change date format to OPC UA (note: the timestamps in the data are incorrect, as
 
     DATE_TYPE = Date_type.OPC_UA
 
-Finally, you can change the table name in database:
+You can change the table name in database:
 
     TABLE_NAME = "crane_data"
+
+Finally, change the nu,bero of variable to 13. You can leave this as zero if you want to store also the cycle into database. However, it affects negatively on modelling accuracy of real data.
+
+    NUMBER_OF_VARIABLES = 13
 
 Note: if you model only single cycle, remove the last row from `fuzzy_sets_crane.txt`
 
