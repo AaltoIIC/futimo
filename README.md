@@ -67,13 +67,9 @@ You can change the table name in database:
 
     TABLE_NAME = "crane_data"
 
-Finally, change the nu,bero of variable to 13. You can leave this as zero if you want to store also the cycle into database. However, it affects negatively on modelling accuracy of real data.
+Finally, change the number of variable to 13. You can leave this as zero if you want to store also the cycle into database with `combined_csv.csv` file. However, it affects negatively on modelling accuracy of the data.
 
     NUMBER_OF_VARIABLES = 13
-
-Note: if you model only single cycle, remove the last row from `fuzzy_sets_crane.txt`
-
-    Cycle; 1.0, 0.1; 2.0, 0.1; 3.0, 0.1; 4.0, 0.1; 5.0, 0.1; 6.0, 0.1; 7.0, 0.1; 8.0, 0.1
 
 Then run:
 
