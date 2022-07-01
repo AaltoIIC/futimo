@@ -1,5 +1,5 @@
-# Fuzzy Scripts
-Fuzzy Scripts for Testing Fuzzy Modeling Method
+# Futida
+Futida, <ins>fu</ins>zzy <ins>ti</ins>me-series <ins>d<ins>ata <ins>a<ins>ggregation method for modeling industrial time-series data.
 
 ## Description
 This project is created for testing the fuzzy data modeling method presented in Tuomas Keski-Heikkilä's master's [thesis](http://urn.fi/URN:NBN:fi:aalto-202109059012).
@@ -31,11 +31,12 @@ If you want to visualize data, run first [expand_fuzzy_sets_for_visualization.py
 
     python3 expand_fuzzy_sets_for_visualization.py
 
-Then you can run MATLAB script [DataVisualization.m](DataVisualization.m) that produces that visulization based on fuzzified data. This is illustarted below for crane data.
+Then you can run  script [data_visualization.py](data_visualization.py) that produces visulization based on fuzzified data. This is illustarted below for crane data.
+
 ![Visualization](examples/figures/Visualization_of_crane_data_1.png)
 ![Visualization](examples/figures/Visualization_of_crane_data_2.png)
 
-See [Documentation](Documentation.md) for more accurate descriptions of the contents of this repository. In addition, if there are issues you can check [Problems?](Documentation.md#problems)
+See [Documentation](Documentation.md) for more accurate descriptions of the contents of this repository. In addition, if there are issues you can check [Problems?](Documentation.md#problems).
 
 ### Use of crane dataset
 
@@ -88,6 +89,7 @@ Remember also to change:
 * csv delimiter to `,`:
 
     CSV_DELIMITER = ","
+
 * fuzzy set description file to `fuzzy_sets_crane.txt`
 
 * table name in database:
@@ -109,6 +111,7 @@ Remember also change the axes settings:
 
 ## Authors and acknowledgment
 Riku Ala-Laurinaho
+Julius Pesonen
 
 The author would like to thank Tuomas Keski-Heikkilä, Miika Valtonen and Juuso Autiosalo for their support.
 The author would like to express his sincere gratitude to Innovaatiosäätiö.

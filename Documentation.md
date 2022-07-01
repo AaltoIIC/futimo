@@ -45,11 +45,20 @@ The output format of the file produced by the script is as follows:
 
 The script uses [fuzzy_sets.txt](#fuzzy_sets.txt) file for definition.
 
-### DataVisualization.m
-This MATLAB-script is used to visualize tha fuzzified data. It takes csv file that includes fuzzy sets parameters in each row for each variable. [expand_fuzzy_sets_for_visualization.py](#expand_fuzzy_sets_for_visualization.py) can be used to form a csv file for this visualization script. Below is an example of the visualization produced by the script for a crane movement.
+### data_visualization.py
+
+This script is used to visualize tha fuzzified data. It takes as an input csv file that includes fuzzy sets parameters in each row for each variable. [expand_fuzzy_sets_for_visualization.py](#expand_fuzzy_sets_for_visualization.py) can be used to form a csv file for this visualization script. Below is an example of the visualization produced by the script for a crane movement.
 
 ![Visualization](examples/figures/Visualization_of_crane_data_1.png)
 ![Visualization](examples/figures/Visualization_of_crane_data_2.png)
+
+The variables to be visualized can be given as arguments to the script in the following form:
+
+    data_visualization.py -m "variable 1" "variable 2"
+
+For example:
+
+     data_visualization.py -m "TrolleyPosition" "BridgePosition"
 
 ### generate_fuzzy_sets.py
 This script is used to generate selected number of fuzzy sets and their membership functions. The result is printed to console and cane be copy-pasted into fuzzy_sets.txt
