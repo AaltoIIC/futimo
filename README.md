@@ -74,7 +74,7 @@ You can change the table name in database:
 
     TABLE_NAME = "crane_data"
 
-Finally, change the number of variable to 13.
+Finally, change the number of variables to 13.
 
     NUMBER_OF_VARIABLES = 13
 
