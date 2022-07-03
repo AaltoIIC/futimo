@@ -1,5 +1,5 @@
 # Futida
-Futida, <ins>fu</ins>zzy <ins>ti</ins>me-series <ins>d<ins>ata <ins>a<ins>ggregation method for modeling industrial time-series data.
+Futida, <ins>fu</ins>zzy <ins>ti</ins>me-series <ins>d</ins>ata <ins>a</ins>ggregation method for modeling industrial time-series data.
 
 ## Description
 This project is created for testing the fuzzy data modeling method presented in Tuomas Keski-Heikkilä's master's [thesis](http://urn.fi/URN:NBN:fi:aalto-202109059012).
@@ -31,7 +31,13 @@ If you want to visualize data, run first [expand_fuzzy_sets_for_visualization.py
 
     python3 expand_fuzzy_sets_for_visualization.py
 
-Then you can run  script [data_visualization.py](data_visualization.py) that produces visulization based on fuzzified data. This is illustarted below for crane data.
+Then you can run script [data_visualization.py](data_visualization.py) that produces visulization based on fuzzified data. This is illustarted below for test data.
+
+    python3 data_visualization.py
+
+The variables to be visualized can be given as arguments:
+
+    python3 data_visualization.py -m "Temperature" "Motor speed rpm"
 
 ![Visualization](examples/figures/Visualization_of_crane_data_1.png)
 ![Visualization](examples/figures/Visualization_of_crane_data_2.png)
@@ -40,8 +46,8 @@ See [Documentation](Documentation.md) for more accurate descriptions of the cont
 
 ### Use of crane dataset
 
-We have collected a industrial crane dataset that is available in [IEEE Dataport](https://dx.doi.org/10.21227/6b9d-tr16) (downloading requires registration).
-The more accurate description of tha data set is also available in IEEE Dataport.
+We have collected a industrial crane dataset that is available in [Zenodo](https://doi.org/10.5281/zenodo.6787783) (downloading requires registration).
+The more accurate description of tha data set is also available in Zenodo.
 
 The root of dataset folder contains `combined_csv.csv` file that includes the most relevant variables from all cycles.
 In addition, it is possible to examine each test cycle separately from Raw data -> CycleX. Each test cycle folder contain `CycleX_export_dataframe.csv` that includes the most relevant variables, and is good starting point for examinine data.
@@ -68,7 +74,7 @@ You can change the table name in database:
 
     TABLE_NAME = "crane_data"
 
-Finally, change the number of variable to 13. You can leave this as zero if you want to store also the cycle into database with `combined_csv.csv` file. However, it affects negatively on modelling accuracy of the data.
+Finally, change the number of variable to 13. You can leave this as zero if you want to store also the cycle into database with `combined_csv.csv` file. However, it affects negatively on modeling accuracy of the data.
 
     NUMBER_OF_VARIABLES = 13
 
@@ -76,44 +82,44 @@ Then run:
 
     python3 fuzzy_modeling.py
 
-From file `expand_fuzzy_sets_for_visualization.py` you can modify the variables that you want aggregate.
+If you want to visualize crane data, you need to run `expand_fuzzy_sets_for_visualization.py`.
+From that file you can modify the variables that you want aggregate:
 
     LIST_OF_AGGREGATED_VARIABLES = ["BridgePosition", "LoadTare", "HoistPosition", "TrolleyPosition"]
 
+or then you can select all variables:
+
+    USE_ALL_VARIABLES = True
+
 Remember also to change:
 
-* csv delimiter to `,`:
+Fuzzy sets description file to `fuzzy_sets_crane.txt`
 
-    CSV_DELIMITER = ","
+    FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_crane.txt"
 
-* fuzzy set description file to `fuzzy_sets_crane.txt`
-
-* table name in database:
+Table name to match tablename in database:
 
     TABLE_NAME = "crane_data"
 
-
-You can also list all variables, in which case the script is used only to produce suitable dataformat for `DataVisualizationCrane.m`. Run:
+Finally, run:
 
     python3 expand_fuzzy_sets_for_visualization.py
 
-After this you can use `DataVisualizationCrane.m` to visualize data.
-Change variables `BridgePositionMean`, `BridgePositionSigma`, `TrolleyPositionMean`, and `TrolleyPositionSigma` to model other variables. For example, if you want to model HoistPosition, change `BridgePositionMean`, `BridgePositionSigma` to `HoistPositionMean`, `HoistPositionSigma`.
-Remember also change the axes settings:
+After this you can use `data_visualizaton.py` to visualize data. Remember to give the variables you want to visualize as arguments:
 
-    x = 14:.1:26; % BridgeAxis
-    y = 0:.1:11; %TrolleyAxis
+    python3 data_visualization.py -m TrolleyPosition BridgePosition
 
 
 ## Authors and acknowledgment
 Riku Ala-Laurinaho
 Julius Pesonen
 
-The author would like to thank Tuomas Keski-Heikkilä, Miika Valtonen and Juuso Autiosalo for their support.
-The author would like to express his sincere gratitude to Innovaatiosäätiö.
+The authors would like to thank Tuomas Keski-Heikkilä, Miika Valtonen and Juuso Autiosalo for their support.
+The authors would like to thank Joel Mattila for testing the scripts.
+The authors would like to express their sincere gratitude to Innovaatiosäätiö.
 
 ## License
 MIT
 
 ## Project status
-Initial version published.
+First working version is published.

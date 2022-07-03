@@ -6,7 +6,7 @@ from scipy.stats import multivariate_normal
 from matplotlib import cm
 
 
-BANDWIDTH = 2 #Select the width of pdf functions. The original fuzzy set sigma is multiplied with this.
+BANDWIDTH = 1 #Select the width of pdf functions. The original fuzzy set sigma is multiplied with this.
 EXTRA_RANGE = 20 #How many percents of the total range is sunbstracted from minimum or added to maximum value of modeled variable to define axes
 ACCURACY = 0.1 #Distance between points in axes
 

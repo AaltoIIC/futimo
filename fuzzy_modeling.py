@@ -1,3 +1,4 @@
+from matplotlib import table
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -343,11 +344,6 @@ def aggregate_data_with_query(list_of_variables, database_file, table_name):
         cursor.execute(query)
         data = cursor.fetchall()
         print("Number of rows returned after aggregation:", len(data))
-        """
-        print("Aggregated data:")
-        for row in data:
-            print(row)
-        """
         conn.commit()
         return data
 
@@ -359,6 +355,7 @@ def aggregate_data_with_query(list_of_variables, database_file, table_name):
         if conn:
             conn.close()
         print("Connection to database closed")
+
 
 def main():
     fuzzy_sets = read_fuzzy_sets(FILE_NAME_FUZZY_SETS)
