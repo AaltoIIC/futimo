@@ -111,8 +111,8 @@ After this you can use `data_visualizaton.py` to visualize data. Remember to giv
 
 
 ## Authors and acknowledgment
-Riku Ala-Laurinaho
-Julius Pesonen
+* Riku Ala-Laurinaho
+* Julius Pesonen
 
 The authors would like to thank Tuomas Keski-Heikkilä, Miika Valtonen and Juuso Autiosalo for their support.
 The authors would like to thank Joel Mattila for testing the scripts.
