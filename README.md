@@ -39,8 +39,8 @@ The variables to be visualized can be given as arguments:
 
     python3 data_visualization.py -m "Temperature" "Motor speed rpm"
 
-![Visualization](examples/figures/Visualization_of_crane_data_1.png)
-![Visualization](examples/figures/Visualization_of_crane_data_2.png)
+![Visualization](examples/figures/visualization_cycle_1.JPG)
+![Visualization](examples/figures/visualization_cycle_1_xy.JPG)
 
 See [Documentation](Documentation.md) for more accurate descriptions of the contents of this repository. In addition, if there are issues you can check [Problems?](Documentation.md#problems).
 
