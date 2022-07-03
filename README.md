@@ -74,7 +74,7 @@ You can change the table name in database:
 
     TABLE_NAME = "crane_data"
 
-Finally, change the number of variable to 13. You can leave this as zero if you want to store also the cycle into database with `combined_csv.csv` file. However, it affects negatively on modeling accuracy of the data.
+Finally, change the number of variable to 13.
 
     NUMBER_OF_VARIABLES = 13
 
