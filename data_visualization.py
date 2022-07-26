@@ -6,7 +6,8 @@ from scipy.stats import multivariate_normal
 from matplotlib import cm
 
 
-BANDWIDTH = 1 #Select the width of pdf functions. The original fuzzy set sigma is multiplied with this.
+BANDWIDTH_X = 1 #Select the width of pdf functions. The original fuzzy set sigma is multiplied with this.
+BANDWIDTH_Y = 1 #Select the width of pdf functions. The original fuzzy set sigma is multiplied with this
 EXTRA_RANGE = 20 #How many percents of the total range is sunbstracted from minimum or added to maximum value of modeled variable to define axes
 ACCURACY = 0.1 #Distance between points in axes
 
@@ -58,10 +59,10 @@ for i in range(T.shape[0]):
 for i in range(T.shape[0]):
     if args.m == None:
         mu = [T.TemperatureMean[i], T.VoltageMean[i]]
-        sigma = [[(T.TemperatureSigma[i] * BANDWIDTH), 0],[ 0, (T.VoltageSigma[i])]]
+        sigma = [[(T.TemperatureSigma[i] * BANDWIDTH_X), 0],[ 0, (T.VoltageSigma[i] * BANDWIDTH_Y)]]
     else:
         mu = [T[means[0]][i], T[means[1]][i]]
-        sigma = [[(T[sigmas[0]][i] * BANDWIDTH), 0], [0, (T[sigmas[1]][i])]]
+        sigma = [[(T[sigmas[0]][i] * BANDWIDTH_X), 0], [0, (T[sigmas[1]][i] * BANDWIDTH_Y)]]
     pdf = multivariate_normal.pdf(np.transpose([X.flatten(),Y.flatten()]),mean=mu, cov=sigma)
     Z = Z + pdf*T.Weight[i]
 
