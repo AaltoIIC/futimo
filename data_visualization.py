@@ -40,21 +40,20 @@ X,Y = np.meshgrid(x,y, indexing='xy')
 Z = 0
 
 #Test sigmas. If sigma = -1, variable is binary and cannot be visualized.
-for i in range(T.shape[0]):
-    if args.m == None:
-        if T.TemperatureSigma[0] == -1:
-            print("Temperature is binary variable, cannot visualize data. Try another variable. Quit...")
-            quit()
-        if T.VoltageSigma[0] == -1:
-            print("Voltage is binary variable, cannot visualize data. Try another variable. Quit...")
-            quit()            
-    else:
-        if T[sigmas[0]][0] == -1:
-            print("{} is binary variable, cannot visualize data. Try another variable. Quit...".format(vars[0]))
-            quit()
-        if T[sigmas[1]][0] == -1:
-            print("{} is binary variable, cannot visualize data. Try another variable. Quit...".format(vars[1]))
-            quit()
+if args.m == None:
+    if T.TemperatureSigma[0] == -1:
+        print("Temperature is binary variable, cannot visualize data. Try another variable. Quit...")
+        quit()
+    if T.VoltageSigma[0] == -1:
+        print("Voltage is binary variable, cannot visualize data. Try another variable. Quit...")
+        quit()            
+else:
+    if T[sigmas[0]][0] == -1:
+        print("{} is binary variable, cannot visualize data. Try another variable. Quit...".format(vars[0]))
+        quit()
+    if T[sigmas[1]][0] == -1:
+        print("{} is binary variable, cannot visualize data. Try another variable. Quit...".format(vars[1]))
+        quit()
 
 for i in range(T.shape[0]):
     if args.m == None:
