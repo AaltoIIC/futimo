@@ -1,5 +1,5 @@
 # Futimo
-Futimo, <ins>fu</ins>zzy <ins>ti</ins>me-series <ins>d</ins>ata <ins>a</ins>ggregation method for modeling industrial time-series data.
+Futimo, <ins>fu</ins>zzy <ins>ti</ins>me-series <ins>d</ins>ata <ins>mo</ins>deling method for modeling industrial time-series data.
 
 ## Description
 This project is created for testing the fuzzy data modeling method presented in Tuomas Keski-Heikkilä's master's [thesis](http://urn.fi/URN:NBN:fi:aalto-202109059012).
