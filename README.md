@@ -2,7 +2,7 @@
 Futimo, <ins>fu</ins>zzy <ins>ti</ins>me-series data <ins>mo</ins>deling method for modeling industrial time-series data.
 
 ## Description
-This project is created for testing the fuzzy data modeling method presented in Tuomas Keski-Heikkilä's master's [thesis](http://urn.fi/URN:NBN:fi:aalto-202109059012).
+This project contains scripts that allow data modeling using Futimo method. The method is implemented based on Tuomas Keski-Heikkilä's master's [thesis](http://urn.fi/URN:NBN:fi:aalto-202109059012).
 A journal article of the method is currently under writing.
 
 ## Installation
