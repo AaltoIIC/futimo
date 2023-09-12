@@ -19,11 +19,11 @@ After that you can run [fuzzy_modeling.py](fuzzy_modeling.py) to fuzzify data an
 
     python3 fuzzy_modeling.py
 
-This script can visualize the fuzzy sets used for fuzzification.
+By default, this script also visualizes the fuzzy sets used for fuzzification.
 
 ![Visualization](examples/figures/fuzzy_sets.png)
 
-In addition, raw data can be plotted.
+In addition, it plots the raw data.
 
 ![Visualization](examples/figures/Visualization_of_crane_data_raw.png)
 
