@@ -52,7 +52,7 @@ The more accurate description of tha data set is also available in Zenodo.
 The root of dataset folder contains `combined_csv.csv` file that includes the most relevant variables from all cycles.
 In addition, it is possible to examine each test cycle separately from Raw data -> CycleX. Each test cycle folder contain `CycleX_export_dataframe.csv` that includes the most relevant variables, and is good starting point for examinine data.
 
-To model data in `combined_csv.csv` or `CycleX_export_dataframe.csv`, in `fuzzy_modeling.py` the following modifications has to be made:
+To model data in `combined_csv.csv` or `CycleX_export_dataframe.csv` files, the following modifications needs to be made to `fuzzy_modeling.py`:
 
 Change the fuzzy set description file to `fuzzy_sets_crane.txt`
 
