@@ -58,9 +58,9 @@ Change the fuzzy set description file to `fuzzy_sets_crane.txt`
 
     FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_crane.txt"
 
-Then set input file name to the csv file you want to model (in this case, it is assumed that the file is located to the same folder):
+Then set input file name to the csv file you want to model (in this case, it is assumed that the file is located to the same folder as `fuzzy_modeling.py` file):
 
-    #FILE_NAME_TEST_DATA = "combined_csv.csv"
+    FILE_NAME_TEST_DATA = "combined_csv.csv"
 
 Change csv delimiter to `,`:
 
