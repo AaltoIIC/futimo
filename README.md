@@ -27,7 +27,7 @@ In addition, it plots the raw data.
 
 ![Visualization](examples/figures/Visualization_of_crane_data_raw.png)
 
-If you want to visualize data, run first [expand_fuzzy_sets_for_visualization.py](expand_fuzzy_sets_for_visualization.py)
+If you want to visualize data stored in database, run first [expand_fuzzy_sets_for_visualization.py](expand_fuzzy_sets_for_visualization.py). This also aggregates data in database using the variables selected in the beginning of the file.
 
     python3 expand_fuzzy_sets_for_visualization.py
 
