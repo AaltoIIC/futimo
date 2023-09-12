@@ -8,7 +8,7 @@ STARTDATE = "2022-03-20T11:35:40.000Z" #The starting timestamp for test data
 TIME_INTERVAL = 200 #Time between data rows in millisecods
 NUMBER_OF_ROWS = 10 #How many rows are generated
 
-FILE_NAME_VARIABLE_DESCRIPTIONS = "examples/test_data_descriptions.txt" #File where variable descriptions are defined if this fiel does not exists gaussian distribution with mu = 0 and sigma = 1 for each variable is used.
+FILE_NAME_VARIABLE_DESCRIPTIONS = "examples/test_data_descriptions.txt" #File where variable descriptions are defined. If this file does not exist, gaussian distribution with mu = 0 and sigma = 1 for each variable is used.
 FILE_NAME = "test_data_set.csv" #File name for the generated .csv file
 
 #Read parameters from FILE_NAME_VARIABLE_DESCRIPTIONS for generating test data
