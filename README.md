@@ -109,6 +109,12 @@ After this you can use `data_visualizaton.py` to visualize data. Remember to giv
 
     python3 data_visualization.py -m TrolleyPosition BridgePosition
 
+After running this script using aggregation of all variables and combined_csv.csv as an input, you should get the following visualizations.
+
+![Visualization](examples/figures/VisualizationCrane2D.png)
+![Visualization](examples/figures/VisualizationCrane3D.png)
+
+
 
 ## Authors and acknowledgment
 * Riku Ala-Laurinaho
