@@ -21,17 +21,17 @@ After that you can run [fuzzy_modeling.py](fuzzy_modeling.py) to fuzzify data an
 
 By default, this script also visualizes the fuzzy sets used for fuzzification.
 
-![Visualization](examples/figures/fuzzy_sets.png)
+![Visualization](examples/figures/temperature_fuzzy_sets.png)
 
 In addition, it plots the raw data.
 
-![Visualization](examples/figures/Visualization_of_crane_data_raw.png)
+![Visualization](examples/figures/temperature_raw_data.png)
 
 If you want to visualize data stored in database, run first [expand_fuzzy_sets_for_visualization.py](expand_fuzzy_sets_for_visualization.py). This also aggregates data in database using the variables selected in the beginning of the file.
 
     python3 expand_fuzzy_sets_for_visualization.py
 
-Then you can run script [data_visualization.py](data_visualization.py) that produces visulization based on fuzzified data. This is illustarted below for test data.
+Then you can run script [data_visualization.py](data_visualization.py) that produces visulization based on fuzzified data. This is illustarted below for the created test data.
 
     python3 data_visualization.py
 
@@ -39,8 +39,8 @@ The variables to be visualized can be given as arguments:
 
     python3 data_visualization.py -m "Temperature" "Motor speed rpm"
 
-![Visualization](examples/figures/visualization_cycle_1.JPG)
-![Visualization](examples/figures/visualization_cycle_1_xy.JPG)
+![Visualization](examples/figures/VisualizationTestData2D.png)
+![Visualization](examples/figures/VisualizationTestData3D.png)
 
 See [Documentation](Documentation.md) for more accurate descriptions of the contents of this repository. In addition, if there are issues you can check [Problems?](Documentation.md#problems).
 
