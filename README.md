@@ -46,7 +46,7 @@ See [Documentation](Documentation.md) for more accurate descriptions of the cont
 
 ### Use of crane dataset
 
-We have collected a industrial crane dataset that is available in [Zenodo](https://doi.org/10.5281/zenodo.6907569) (downloading requires registration).
+We have collected a industrial crane dataset that is available in [Zenodo](https://doi.org/10.5281/zenodo.6907569).
 The more accurate description of tha data set is also available in Zenodo.
 
 The root of dataset folder contains `combined_csv.csv` file that includes the most relevant variables from all cycles.
