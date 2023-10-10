@@ -34,7 +34,7 @@ else:
     x_extra_range = (np.amax(T[means[0]]) - np.amin(T[means[0]])) * EXTRA_RANGE/100
     x = np.arange(np.amin(T[means[0]])-x_extra_range, np.amax(T[means[0]])+x_extra_range, ACCURACY)
     y_extra_range = (np.amax(T[means[1]]) - np.amin(T[means[1]])) * EXTRA_RANGE/100
-    y = np.arange(np.amin(T[means[1]])-x_extra_range, np.amax(T[means[1]])+y_extra_range, ACCURACY)
+    y = np.arange(np.amin(T[means[1]])-y_extra_range, np.amax(T[means[1]])+y_extra_range, ACCURACY)
 
 X,Y = np.meshgrid(x,y, indexing='xy')
 Z = 0
