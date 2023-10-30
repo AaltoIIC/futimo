@@ -10,24 +10,26 @@ import heapq
 from enum import Enum
 
 # Visualization parameters
-VISUALIZATION_FUZZY_SETS = True #Visualize membership functions read from FILE_NAME_FUZZY_SETS, True = on, False = off
-VISUALIZATION_INPUT_DATA = True #Visualize input data from FILE_NAME_TEST_DATA, True = on, False = off
+VISUALIZATION_FUZZY_SETS = False #Visualize membership functions read from FILE_NAME_FUZZY_SETS, True = on, False = off
+VISUALIZATION_INPUT_DATA = False #Visualize input data from FILE_NAME_TEST_DATA, True = on, False = off
 VISUALIZATION_WIDTH = 5 # How many times the std. dev. is the width of the visualization
 VISUALIZATION_NO_POINTS = 200 # How many points are used for visualization
 
 # File names
-FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets.txt" #Definitions for fuzzy sets
+FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_crane.txt" #Definitions for fuzzy sets
+#FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_car.txt" #Definitions for fuzzy sets
 #FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_crane.txt" #Definitions for fuzzy sets
-FILE_NAME_TEST_DATA = "test_data_set.csv" #Input data
-#FILE_NAME_TEST_DATA = "combined_csv.csv"
-FILE_NAME_DATA_BASE = "fuzzy_data.db" #Database location
+#FILE_NAME_TEST_DATA = "test_data_set.csv" #Input data
+FILE_NAME_TEST_DATA = "combined_csv.csv"
+#FILE_NAME_TEST_DATA = "time_bucketed_car.csv"
+FILE_NAME_DATABASE = "fuzzy_data.db" #Database location
 
 #Select csv file delimiter for FILE_NAME_TEST_DATA
 CSV_DELIMITER = ";"
 
 
 # Aggregation
-AGGREGATE_DATA = True #Fetch aggregated data from database
+AGGREGATE_DATA = False #Fetch aggregated data from database
 LIST_OF_AGGREGATED_VARIABLES = ["Variable 1", "Variable 2"] #["Temperature", "Voltage", "Motor speed rpm", "AlertOn", "Variable 5"] #Select aggregated variables
 
 # Define available dateformats
@@ -50,8 +52,8 @@ class Variable_type(Enum):
     NUMERIC = 2
 
 # Table name for fuzzified data
-#TABLE_NAME = "crane_data"
-TABLE_NAME = "fuzzy_sets" 
+TABLE_NAME = "crane_data"
+#TABLE_NAME = "car_data" 
 
 # Defines how many columns are read from input csv file, if this is set to 0, all variables are read
 NUMBER_OF_VARIABLES = 0
@@ -90,9 +92,9 @@ def convert_int_OPC_UA(x):
         return int(value)
 
 #Read data from csv file, fuzzify data, and write into db
-def read_data_and_fuzzify(fuzzy_sets):
+def read_data_and_fuzzify(fuzzy_sets, file_name_test_data, file_name_database, table_name):
     #Read csv file row by row
-    with open(FILE_NAME_TEST_DATA, "r") as f:
+    with open(file_name_test_data, "r") as f:
         reader = csv.reader(f, delimiter=CSV_DELIMITER)
         fuzzified_data = [] #Data structure: [[timestamp, [membership grades of fuzzysets variable 1], [variable 2], [variable n]], [timestamp 2, [variable 1], [variable2], [variable 2]]]
         variable_names = next(reader)[1:]
@@ -119,7 +121,7 @@ def read_data_and_fuzzify(fuzzy_sets):
     #Write fuzzified data into database
     try:
         #Connect to database
-        conn = sqlite3.connect(FILE_NAME_DATA_BASE)
+        conn = sqlite3.connect(file_name_database)
         cursor = conn.cursor()
         print("Connected to database")
 
@@ -147,11 +149,11 @@ def read_data_and_fuzzify(fuzzy_sets):
         #NOTE: This method of directly modifying query string is insecure and should ne modified for production version
         #Create table if it does not exist already
         if timestamps_work:
-            creation_query = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + """ (
+            creation_query = "CREATE TABLE IF NOT EXISTS " + table_name + """ (
                 id INTEGER PRIMARY KEY,
                 Timestamp DATETIME NOT NULL,""" + ",".join(["'" + variable_names[i] + "'" + " INTEGER" for i in range(variables_read - 1)]) + ", Weight FLOAT);"
         else:
-            creation_query = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + """ (
+            creation_query = "CREATE TABLE IF NOT EXISTS " + table_name + """ (
                 id INTEGER PRIMARY KEY,
                 Timestamp TEXT NOT NULL,""" + ",".join(["'" + variable_names[i] + "'" + " INTEGER" for i in range(variables_read - 1)]) + ", Weight FLOAT);"
         count = cursor.execute(creation_query)
@@ -199,7 +201,7 @@ def read_data_and_fuzzify(fuzzy_sets):
                         date_string = str(year) + "-" + str(month) + "-" +  str(day) + "T" + str(hours) + ":" + str(minutes) + ":" + str(seconds) + "." + str(int(microseconds/1000)) #SQLite accespts this format: YYYY-MM-DDTHH:MM:SS.SSS
             else:
                 date_string = timestamp
-            insert_query = "INSERT INTO " + TABLE_NAME + """
+            insert_query = "INSERT INTO " + table_name + """
                                 (Timestamp,""" + ",".join(["'" + variable_names[i] + "'" for i in range(variables_read - 1)]) + """, Weight) 
                                 Values ('""" + date_string + "'," + ",".join([str(grade_tuple[1]) for grade_tuple in highest_grade_fuzzy_sets]) + "," + str(highest_weight) + """),
                                 ('"""+ date_string + "'," + ",".join([str(grade_tuple[1]) for grade_tuple in second_highest_grade_fuzzy_sets]) + "," + str(second_highest_weight) + ");"
@@ -220,7 +222,7 @@ def read_data_and_fuzzify(fuzzy_sets):
         cursor.close()
         if conn:
             conn.close()
-        print("Connection to database closed")
+        print("Connection to database closed, modeling")
 
 
 #Helper function to visualize membership functions
@@ -332,7 +334,7 @@ def aggregate_data_with_query(list_of_variables, database_file, table_name):
         #Connect to database
         conn = sqlite3.connect(database_file)
         cursor = conn.cursor()
-        print("Connected to database")
+        #print("Connected to database")
 
         #NOTE: This method of directly modifying query string is insecure and should ne modified for production version
         #Sum and fetch data
@@ -343,7 +345,7 @@ def aggregate_data_with_query(list_of_variables, database_file, table_name):
 
         cursor.execute(query)
         data = cursor.fetchall()
-        print("Number of rows returned after aggregation:", len(data))
+        #print("Number of rows returned after aggregation:", len(data))
         conn.commit()
         return data
 
@@ -354,20 +356,20 @@ def aggregate_data_with_query(list_of_variables, database_file, table_name):
         cursor.close()
         if conn:
             conn.close()
-        print("Connection to database closed")
+        print("Connection to database closed, aggregation")
 
 
-def main():
-    fuzzy_sets = read_fuzzy_sets(FILE_NAME_FUZZY_SETS)
-    read_data_and_fuzzify(fuzzy_sets)
+def model_data(file_name_fuzzy_sets=FILE_NAME_FUZZY_SETS, file_name_test_data=FILE_NAME_TEST_DATA, file_name_database=FILE_NAME_DATABASE, table_name=TABLE_NAME):
+    fuzzy_sets = read_fuzzy_sets(file_name_fuzzy_sets)
+    read_data_and_fuzzify(fuzzy_sets, file_name_test_data, file_name_database, table_name)
     if VISUALIZATION_INPUT_DATA:
         visualize_input_data()
     if AGGREGATE_DATA:
-        aggregate_data_with_query(LIST_OF_AGGREGATED_VARIABLES, FILE_NAME_DATA_BASE, TABLE_NAME)
+        aggregate_data_with_query(LIST_OF_AGGREGATED_VARIABLES, file_name_database, table_name)
 
 if __name__ == "__main__":
-    main()
+    model_data(FILE_NAME_FUZZY_SETS, FILE_NAME_TEST_DATA, FILE_NAME_DATABASE, TABLE_NAME)
 else:
-    #set visualization of if used as library
+    #set visualization off if used as library
     VISUALIZATION_FUZZY_SETS = False #Visualize membership functions read from FILE_NAME_FUZZY_SETS, True = on, False = off
     VISUALIZATION_INPUT_DATA = False #Visualize input data from FILE_NAME_TEST_DATA, True = on, False = off

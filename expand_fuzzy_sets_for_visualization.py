@@ -4,8 +4,8 @@ import sqlite3
 from fuzzy_modeling import read_fuzzy_sets, aggregate_data_with_query
 
 # File names
-FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets.txt" #Definitions for fuzzy sets
-#FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_crane.txt"
+#FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets.txt" #Definitions for fuzzy sets
+FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_car.txt"
 FILE_NAME_DATA_BASE = "fuzzy_data.db" #Database location
 OUTPUT_FILE = "data_for_visualization.csv"
 
@@ -13,15 +13,16 @@ OUTPUT_FILE = "data_for_visualization.csv"
 CSV_DELIMITER = ";"
 
 #Select aggregated variables
-LIST_OF_AGGREGATED_VARIABLES = ["Temperature", "Voltage", "Motor speed rpm", "AlertOn", "Variable 5"] #The order of variables MUST BE same as in the database/fuzzy sets description file
-#LIST_OF_AGGREGATED_VARIABLES = ["TrolleyPosition", "TrolleySpeedFeedback"]
+#LIST_OF_AGGREGATED_VARIABLES = ["Temperature", "Voltage", "Motor speed rpm", "AlertOn", "Variable 5"] #The order of variables MUST BE same as in the database/fuzzy sets description file
+#LIST_OF_AGGREGATED_VARIABLES = ["BridgePosition", "LoadTare", "HoistPosition", "TrolleyPosition"]
 
 # OR
 
-USE_ALL_VARIABLES = False #Use all variables in aggregation
+USE_ALL_VARIABLES = True #Use all variables in aggregation
 
-TABLE_NAME = "fuzzy_sets"
+#TABLE_NAME = "fuzzy_sets"
 #TABLE_NAME = "crane_data"
+TABLE_NAME = "car_data"
 
 def construct_output_file(data, fuzzy_sets, outputfile, delimiter, list_of_variables):
     with open(outputfile, "w") as f:
@@ -64,7 +65,7 @@ def get_variable_names(database_file, table_name):
         cursor.close()
         if conn:
             conn.close()
-        print("Connection to database closed")
+        print("Connection to database closed, visualization")
 
 
 def main():
