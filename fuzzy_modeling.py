@@ -16,13 +16,13 @@ VISUALIZATION_WIDTH = 5 # How many times the std. dev. is the width of the visua
 VISUALIZATION_NO_POINTS = 200 # How many points are used for visualization
 
 # File names
-FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_crane.txt" #Definitions for fuzzy sets
-#FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_car.txt" #Definitions for fuzzy sets
+#FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_crane.txt" #Definitions for fuzzy sets
+FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_car.txt" #Definitions for fuzzy sets
 #FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_crane.txt" #Definitions for fuzzy sets
 #FILE_NAME_TEST_DATA = "test_data_set.csv" #Input data
-FILE_NAME_TEST_DATA = "combined_csv.csv"
-#FILE_NAME_TEST_DATA = "time_bucketed_car.csv"
-FILE_NAME_DATABASE = "fuzzy_data.db" #Database location
+#FILE_NAME_TEST_DATA = "combined_csv.csv"
+FILE_NAME_TEST_DATA = "time_bucketed_car.csv"
+FILE_NAME_DATABASE = "fuzzy_data_car.db" #Database location
 
 #Select csv file delimiter for FILE_NAME_TEST_DATA
 CSV_DELIMITER = ";"
@@ -52,8 +52,8 @@ class Variable_type(Enum):
     NUMERIC = 2
 
 # Table name for fuzzified data
-TABLE_NAME = "crane_data"
-#TABLE_NAME = "car_data" 
+#TABLE_NAME = "crane_data"
+TABLE_NAME = "car_data" 
 
 # Defines how many columns are read from input csv file, if this is set to 0, all variables are read
 NUMBER_OF_VARIABLES = 0
@@ -253,12 +253,12 @@ def visualize_membership_functions_of_variable(variable):
 
 
 #Visualize input data
-def visualize_input_data():
+def visualize_input_data(file_name_test_data):
     timestamps = [] #list of timestamps, used as x values
     variable_values = [] #two dimensional list [[variable 1 values], [variable 2 values]] used as y values
 
     #Read data from file
-    with open(FILE_NAME_TEST_DATA, "r") as f:
+    with open(file_name_test_data, "r") as f:
         reader = csv.reader(f, delimiter=CSV_DELIMITER)
         first_line = next(reader) #read column names
         if NUMBER_OF_VARIABLES == 0:
@@ -363,7 +363,7 @@ def model_data(file_name_fuzzy_sets=FILE_NAME_FUZZY_SETS, file_name_test_data=FI
     fuzzy_sets = read_fuzzy_sets(file_name_fuzzy_sets)
     read_data_and_fuzzify(fuzzy_sets, file_name_test_data, file_name_database, table_name)
     if VISUALIZATION_INPUT_DATA:
-        visualize_input_data()
+        visualize_input_data(FILE_NAME_TEST_DATA)
     if AGGREGATE_DATA:
         aggregate_data_with_query(LIST_OF_AGGREGATED_VARIABLES, file_name_database, table_name)
 

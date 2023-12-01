@@ -6,19 +6,20 @@ from fuzzy_modeling import read_fuzzy_sets, aggregate_data_with_query
 # File names
 #FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets.txt" #Definitions for fuzzy sets
 FILE_NAME_FUZZY_SETS = "examples/fuzzy_sets_car.txt"
-FILE_NAME_DATA_BASE = "fuzzy_data.db" #Database location
-OUTPUT_FILE = "data_for_visualization.csv"
+FILE_NAME_DATA_BASE = "fuzzy_data_car.db" #Database location
+OUTPUT_FILE = "data_for_visualization_car_test.csv"
 
-# Select csv file delimiter
+# Select csv file delimiter for output
 CSV_DELIMITER = ";"
 
 #Select aggregated variables
 #LIST_OF_AGGREGATED_VARIABLES = ["Temperature", "Voltage", "Motor speed rpm", "AlertOn", "Variable 5"] #The order of variables MUST BE same as in the database/fuzzy sets description file
 #LIST_OF_AGGREGATED_VARIABLES = ["BridgePosition", "LoadTare", "HoistPosition", "TrolleyPosition"]
+LIST_OF_AGGREGATED_VARIABLES = ["brake_pedal", "speed"]
 
 # OR
 
-USE_ALL_VARIABLES = True #Use all variables in aggregation
+USE_ALL_VARIABLES = False #Use all variables in aggregation
 
 #TABLE_NAME = "fuzzy_sets"
 #TABLE_NAME = "crane_data"
