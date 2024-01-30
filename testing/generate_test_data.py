@@ -4,10 +4,10 @@ import datetime
 import random
 import numpy as np
 
-NUMBER_OF_VARIABLES = 1000 #Defines the number of variables in the generated test data
+NUMBER_OF_VARIABLES = 10000 #Defines the number of variables in the generated test data
 STARTDATE = "2023-10-20T11:35:40.000Z" #The starting timestamp for test data
 TIME_INTERVAL = 200 #Time between data rows in millisecods
-NUMBER_OF_ROWS = 100000 #How many rows are generated
+NUMBER_OF_ROWS = 100 #How many rows are generated
 SIGMA = 20
 MU = 60
 
@@ -15,7 +15,7 @@ MU = 60
 FILE_NAME_VARIABLE_DESCRIPTIONS = None
 
 #FILE_NAME = "test_data_set.csv" #File name for the generated .csv file
-FILE_NAME = "../examples/test_data_set_100000_rows_1000_variables.csv"
+FILE_NAME = "../examples/test_data_set_100_rows_10000_variables.csv"
 
 #Read parameters from FILE_NAME_VARIABLE_DESCRIPTIONS for generating test data
 def read_variable_descriptions(mu, sigma):

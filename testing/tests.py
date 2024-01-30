@@ -3,9 +3,9 @@ sys.path.append('..')
 from fuzzy_modeling import model_data, aggregate_data_with_query
 import time
 
-RESULTS_FILE_NAME = "test_results_new.csv"
-RESULTS_FILE_NAME_QUERY = "test_results_query.csv"
-NUMBER_OF_TESTS = 100
+RESULTS_FILE_NAME = "test_results_new_test12.csv"
+RESULTS_FILE_NAME_QUERY = "test_results_query_test12.csv"
+NUMBER_OF_TESTS = 2
 DIVIDER = 10**9
 
 def test_modeling_and_querying(rows=100, variables=100):
@@ -63,6 +63,7 @@ def test_querying(rows=100000, variables=1000, number_of_variables = [1, 5, 10, 
 
 def run_tests():
     results = {}
+    query_results = None
     
     """TEST CASE 1: 100 variables, scalability with different number of rows"""
     
@@ -81,6 +82,7 @@ def run_tests():
     results.update(test_modeling_and_querying(rows=2000, variables=500))
     results.update(test_modeling_and_querying(rows=1000, variables=1000))
     """
+    results.update(test_modeling_and_querying(rows=100, variables=10000))
     
     """TEST CASE 3: 10 million data points, scalability with different number of variables"""
     """
@@ -91,7 +93,7 @@ def run_tests():
     """
     
     """TEST CASE 4: Querying different number of variables"""
-    query_results = test_querying(rows=100000, variables=1000, number_of_variables=[1, 3, 5, 7, 10, 50, 100, 500, 1000])
+    #query_results = test_querying(rows=100000, variables=1000, number_of_variables=[1, 3, 5, 7, 10, 50, 100, 500, 1000])
     
     return results, query_results
     
@@ -139,8 +141,8 @@ def main():
     print("Start tests")
     #start_time = time.monotonic_ns()
     results, query_results = run_tests()
-    #write_results(results)
-    write_results_query(query_results)
+    write_results(results)
+    #write_results_query(query_results)
     #print(results)
     #print(f"TOTAL time in seconds: {(start_time - time.monotonic_ns())/DIVIDER}")
     print("Finish tests")

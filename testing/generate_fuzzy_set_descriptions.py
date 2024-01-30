@@ -2,8 +2,8 @@
 
 import numpy as np
 
-FILE_NAME = "../examples/fuzzy_sets_1000.txt"
-NUMBER_OF_VARIABLES = 1000 #Number of variables
+FILE_NAME = "../examples/fuzzy_sets_10000.txt"
+NUMBER_OF_VARIABLES = 10000 #Number of variables
 NUMBER_OF_FUZZY_SETS = 10 #Number of fuzzy sets
 START = 0 #First mean for gaussian function
 END = 120 #Last mean for gaussian function
